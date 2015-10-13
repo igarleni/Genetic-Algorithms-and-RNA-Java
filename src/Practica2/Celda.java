@@ -11,5 +11,37 @@ package Practica2;
  * @author alumno
  */
 public class Celda {
+    protected boolean libre;
+    private static int idSeed = 0;
+    private final int id;
+    protected char tipo;
+
+    public Celda() {
+        this.libre = true;
+        idSeed++;
+        id = idSeed;
+        tipo = 'c';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public char getTipo() {
+        return tipo;
+    }
+
+    public boolean isLibre() {
+        return libre;
+    }
+
+    public void setLibre() {
+        libre = true;
+    }
+    
+    public void setOcupado(){
+        libre = false;
+    }
+    
     
 }
