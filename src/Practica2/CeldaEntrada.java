@@ -14,8 +14,8 @@ public class CeldaEntrada extends Celda{
     private int cola;
     
     
-    public CeldaEntrada() {
-        super();
+    public CeldaEntrada(Celda prevCelda, Celda nextCelda, int numCars) {
+        super(prevCelda, nextCelda);
         tipo = 'e';
         cola = 0;
     }
@@ -24,12 +24,25 @@ public class CeldaEntrada extends Celda{
         return cola;
     }
     
-    public void incrementarCola(){
-        cola++;
+    public void addCoches(int numCoches){
+        cola += numCoches;
     }
     
-    public void decrementarCola(){
-        cola--;
+    @Override
+    public boolean tieneCoche(){
+        return cola > 0;
+    }
+    
+    @Override
+    protected void generarNextEstado(){
+        boolean nextCeldaAceptaCoche = getNextCelda().nextEstadoAceptaCoche();
+        if (nextCeldaAceptaCoche && cola > 0)
+            cola--;
+    }
+    
+    @Override
+    public void applyNextState(){
+        generarNextEstado();
     }
     
 }
