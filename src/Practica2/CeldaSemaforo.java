@@ -15,6 +15,10 @@ public class CeldaSemaforo extends Celda{
         super(prevCelda, nextCelda);
         tipo = 's';
     }
+
+    boolean getEstadoSemaforo() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
 }

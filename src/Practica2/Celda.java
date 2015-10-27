@@ -25,8 +25,8 @@ public class Celda {
     protected boolean nextEstadoAceptaCoche;
     
     //Celdas vecinas
-    private final Celda prevCelda;
-    private final Celda nextCelda;
+    protected Celda prevCelda;
+    protected Celda nextCelda;
 
     public Celda(Celda prevCelda, Celda nextCelda) {
         this.tieneCoche = false;
@@ -59,7 +59,7 @@ public class Celda {
      */
     protected void generarNextEstado(){
         boolean nextCeldaAceptaCoche = nextCelda.nextEstadoAceptaCoche();
-        if (tieneCoche){ //si hay coches en la celda
+        if (tieneCoche()){ //si hay coches en la celda
             if (nextCeldaAceptaCoche)
                 if (prevCelda.tieneCoche())
                     nextEstadoAceptaCoche = nextEstadoTieneCoche = true;

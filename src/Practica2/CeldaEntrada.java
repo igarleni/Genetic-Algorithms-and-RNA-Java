@@ -38,11 +38,5 @@ public class CeldaEntrada extends Celda{
         boolean nextCeldaAceptaCoche = getNextCelda().nextEstadoAceptaCoche();
         if (nextCeldaAceptaCoche && cola > 0)
             cola--;
-    }
-    
-    @Override
-    public void applyNextState(){
-        generarNextEstado();
-    }
-    
+    }  
 }
