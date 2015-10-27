@@ -1,24 +1,46 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Practica2;
 
-/**
- *
- * @author Italo
- */
 public class CeldaSemaforo extends Celda{
-
-    public CeldaSemaforo(Celda prevCelda, Celda nextCelda) {
+    private boolean estadoSemaforo;
+    
+    public CeldaSemaforo(Celda prevCelda, Celda nextCelda, boolean estadoSemaforo) {
         super(prevCelda, nextCelda);
-        tipo = 's';
+        this.estadoSemaforo = estadoSemaforo;
+        tipo = 'x';
     }
+    
+    @Override
+    protected void generarNextEstado(){
+        if(estadoSemaforo){
+            super.generarNextEstado();
+        }else{
+            boolean nextCeldaAceptaCoche = nextCelda.nextEstadoAceptaCoche();
+            if (tieneCoche()){ //si hay coches en la celda
+                    nextEstadoAceptaCoche = false;
+                    nextEstadoTieneCoche = true;
+            }else{ //si no hay coches en la celda
+                if (prevCelda.tieneCoche())
+                    nextEstadoAceptaCoche = nextEstadoTieneCoche = true;
+                else{
+                    nextEstadoAceptaCoche = true;
+                    nextEstadoTieneCoche = false;
+                }
+            }
+        }
+    }
+    
+    public boolean getEstadoSemaforo(){
+        return estadoSemaforo;
+    }
+    
+    public void actualizarSemaforo(boolean nuevoEstado){
+        this.estadoSemaforo = nuevoEstado;
+    }
+    
+    @Override
+    public void applyNextState(){
+        generarNextEstado();
+    }
+    
 
-    boolean getEstadoSemaforo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
 }
