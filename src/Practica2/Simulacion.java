@@ -14,7 +14,7 @@ public class Simulacion {
     /**
      * 0.- Crear celdas
      * 1.- Leer datos de cromosoma
-     * 2.- Actualizar estado semáforos
+     * 2.- Actualizar estado semáforos (con intersecciones tambien)
      * 3.- Generar nextEstadoCeldas (generarEstado de todas las CeldaEntrada)
      * 4.- Aplicar nextEstado
      * 5.- volver a 1 hasta fin de cromosoma

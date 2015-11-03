@@ -27,7 +27,17 @@ public class Celda {
     //Celdas vecinas
     protected Celda prevCelda;
     protected Celda nextCelda;
-
+    
+    public Celda(){
+        this.tieneCoche = false;
+        
+        this.nextEstadoTieneCoche = false;
+        this.nextEstadoAceptaCoche = true;
+        idSeed++;
+        id = idSeed;
+        tipo = 'c';
+    }
+    
     public Celda(Celda prevCelda, Celda nextCelda) {
         this.tieneCoche = false;
         
@@ -92,6 +102,10 @@ public class Celda {
 
     public Celda getPrevCelda() {
         return prevCelda;
+    }
+    
+    public void setPrevCelda(Celda celda){
+        prevCelda = celda;
     }
 
     public Celda getNextCelda() {

@@ -10,11 +10,13 @@ package Practica2;
  * @author Italo
  */
 public class CeldaPostInterseccion extends Celda{
+    private final String direction;
 
     
-    public CeldaPostInterseccion(Celda prevCelda, Celda nextCelda, String direccion) {
+    public CeldaPostInterseccion(Celda prevCelda, Celda nextCelda, String direction) {
         super(prevCelda, nextCelda);
         tipo = 'p';
+        this.direction = direction;
     }
     
     @Override
@@ -24,7 +26,7 @@ public class CeldaPostInterseccion extends Celda{
         
         if (tieneCoche()){ //si hay coches en la celda
             if (nextCeldaAceptaCoche)
-                if (prevCeldaInters.tieneCoche(this.getId()))
+                if (prevCeldaInters.tieneCoche(direction))
                     nextEstadoAceptaCoche = nextEstadoTieneCoche = true;
                 else {
                     nextEstadoAceptaCoche = true;
@@ -35,7 +37,7 @@ public class CeldaPostInterseccion extends Celda{
                 nextEstadoTieneCoche = true;
             }
         }else{ //si no hay coches en la celda
-            if (prevCeldaInters.tieneCoche(this.getId()))
+            if (prevCeldaInters.tieneCoche(direction))
                 nextEstadoAceptaCoche = nextEstadoTieneCoche = true;
             else{
                 nextEstadoAceptaCoche = false;

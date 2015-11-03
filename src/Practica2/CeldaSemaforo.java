@@ -9,12 +9,15 @@ public class CeldaSemaforo extends Celda{
         tipo = 'x';
     }
     
+    /*
+    * Verde = true, rojo = false
+    */
     @Override
     protected void generarNextEstado(){
         if(estadoSemaforo){
             super.generarNextEstado();
         }else{
-            boolean nextCeldaAceptaCoche = nextCelda.nextEstadoAceptaCoche();
+        boolean nextCeldaAceptaCoche = nextCelda.nextEstadoAceptaCoche();
             if (tieneCoche()){ //si hay coches en la celda
                     nextEstadoAceptaCoche = false;
                     nextEstadoTieneCoche = true;
@@ -37,10 +40,4 @@ public class CeldaSemaforo extends Celda{
         this.estadoSemaforo = nuevoEstado;
     }
     
-    @Override
-    public void applyNextState(){
-        generarNextEstado();
-    }
-    
-
 }

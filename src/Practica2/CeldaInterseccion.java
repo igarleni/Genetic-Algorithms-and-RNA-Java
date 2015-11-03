@@ -14,9 +14,13 @@ public class CeldaInterseccion extends Celda{
     private final CeldaSemaforo prevCeldaHorizontal;
     private final CeldaPostInterseccion nextCeldaVertical;
     private final CeldaSemaforo prevCeldaVertical;
+    
+    private String direction;
+    private String nextDirection;
 
     public CeldaInterseccion(CeldaSemaforo prevCeldaHorizontal, CeldaPostInterseccion nextCeldaHorizontal, CeldaSemaforo prevCeldaVertical, CeldaPostInterseccion nextCeldaVertical) {
         super(prevCeldaHorizontal, nextCeldaHorizontal);
+        direction = "Horizontal";
         this.nextCeldaHorizontal = nextCeldaHorizontal;
         this.prevCeldaHorizontal = prevCeldaHorizontal;
         this.prevCeldaVertical = prevCeldaVertical;
@@ -24,28 +28,30 @@ public class CeldaInterseccion extends Celda{
         
     }
     
-    /**
-     * Cuando el estado del semáforo cambia, el coche puede cambiar de direccion,
-     * ya que la dirección se define por el estado actual de los semáforos, que se
-     * cambia antes de calcular el siguiente estado.
-     * 
-     * Es decir, si hay un coche en la intersección y los estados de los semáforos cambian,
-     * la dirección del coche cambia también, por lo que hay que guardar la dirección del coche.
-     */
     @Override 
     public void generarNextEstado(){
         if(prevCeldaHorizontal.getEstadoSemaforo()){
+            nextCeldaVertical.generarNextEstado(); //genero el estado de la celda siguiente antes de cambiar la dirección
             prevCelda = prevCeldaHorizontal;
             nextCelda = nextCeldaHorizontal;
-        }else{ 
+            nextDirection = "Horizontal";
+        }else{
+            nextCeldaHorizontal.generarNextEstado(); //idem de arriba
             prevCelda = prevCeldaVertical;
             nextCelda = nextCeldaVertical;
+            nextDirection = "Vertical";
         }
         super.generarNextEstado();
     }
     
-    public boolean tieneCoche(int id){
-        if (nextCelda.getId() == id) return super.tieneCoche();
+    public boolean tieneCoche(String direction){
+        if (this.direction.equals(direction)) return super.tieneCoche();
         return false;
+    }
+    
+    @Override
+    public void applyNextState(){
+        super.applyNextState();
+        direction = nextDirection;
     }
 }
