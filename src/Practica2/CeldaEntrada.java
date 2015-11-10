@@ -14,8 +14,9 @@ public class CeldaEntrada extends Celda{
     private int cola;
     
     
-    public CeldaEntrada(Celda prevCelda, Celda nextCelda, int numCars) {
-        super(prevCelda, nextCelda);
+    
+    public CeldaEntrada() {
+        super();
         tipo = 'e';
         cola = 0;
     }

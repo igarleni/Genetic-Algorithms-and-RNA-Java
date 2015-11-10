@@ -3,9 +3,9 @@ package Practica2;
 public class CeldaSemaforo extends Celda{
     private boolean estadoSemaforo;
     
-    public CeldaSemaforo(Celda prevCelda, Celda nextCelda, boolean estadoSemaforo) {
-        super(prevCelda, nextCelda);
-        this.estadoSemaforo = estadoSemaforo;
+    public CeldaSemaforo() {
+        super();
+        estadoSemaforo = false;
         tipo = 'x';
     }
     

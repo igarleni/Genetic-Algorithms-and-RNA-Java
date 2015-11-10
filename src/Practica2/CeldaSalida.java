@@ -3,8 +3,8 @@ package Practica2;
 public class CeldaSalida extends Celda{
     private static int nCochesSalientes=0;
     
-    public CeldaSalida(Celda prevCelda, Celda nextCelda) {
-        super(prevCelda, null);
+    public CeldaSalida() {
+        super();
         tipo = 's';
     }
     

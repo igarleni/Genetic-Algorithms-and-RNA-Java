@@ -33,6 +33,9 @@ public class Celda {
         
         this.nextEstadoTieneCoche = false;
         this.nextEstadoAceptaCoche = true;
+        
+        prevCelda = null;
+        nextCelda = null;
         idSeed++;
         id = idSeed;
         tipo = 'c';
@@ -110,6 +113,10 @@ public class Celda {
 
     public Celda getNextCelda() {
         return nextCelda;
+    }
+    
+    public void setNextCelda(Celda celda){
+        nextCelda = celda;
     }
     
     
