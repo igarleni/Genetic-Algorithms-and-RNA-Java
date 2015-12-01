@@ -13,8 +13,6 @@ package Practica2;
 public class CeldaEntrada extends Celda{
     private int cola;
     
-    
-    
     public CeldaEntrada() {
         super();
         tipo = 'e';
@@ -34,10 +32,8 @@ public class CeldaEntrada extends Celda{
         return cola > 0;
     }
     
-    @Override
-    protected void generarNextEstado(){
-        boolean nextCeldaAceptaCoche = getNextCelda().nextEstadoAceptaCoche();
-        if (nextCeldaAceptaCoche && cola > 0)
-            cola--;
-    }  
+    public void decrementarCola(){
+        cola--;
+    }
+    
 }

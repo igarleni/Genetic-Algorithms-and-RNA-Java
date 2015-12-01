@@ -9,20 +9,12 @@ public class CeldaSalida extends Celda{
     }
     
     @Override
-    protected void generarNextEstado(){
-        if (tieneCoche())nCochesSalientes++ ;
-        if (prevCelda.tieneCoche())
-            nextEstadoAceptaCoche = nextEstadoTieneCoche = true;
-        else {
-            nextEstadoAceptaCoche = true;
-            nextEstadoTieneCoche = false;
-        }
+    public void applyNextEstado(){
+        if (super.nextEstadoTieneCoche)
+            nCochesSalientes++;
+        super.applyNextEstado();
     }
     
-    @Override
-    public void applyNextState(){
-        generarNextEstado();
-    }
     public int getCochesSalientes(){
         return nCochesSalientes;
     }

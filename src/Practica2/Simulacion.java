@@ -12,11 +12,10 @@ package Practica2;
  */
 public class Simulacion {
     /**
-     * 0.- Crear celdas
+     * 0.- Crear tablero
      * 1.- Leer datos de cromosoma
      * 2.- Actualizar estado semáforos (con intersecciones tambien)
-     * 3.- Generar nextEstadoCeldas (generarEstado de todas las CeldaEntrada)
-     * 4.- Aplicar nextEstado
-     * 5.- volver a 1 hasta fin de cromosoma
+     * 3.- avanzar turno
+     * 5.- volver a 1/3 hasta fin de cromosoma
      */
 }

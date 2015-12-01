@@ -2,42 +2,35 @@ package Practica2;
 
 public class CeldaSemaforo extends Celda{
     private boolean estadoSemaforo;
+    private boolean nextEstadoSemaforo;
+    private final String direction;
+
+    public String getDirection() {
+        return direction;
+    }
     
-    public CeldaSemaforo() {
+    public CeldaSemaforo(String direction) {
         super();
         estadoSemaforo = false;
         tipo = 'x';
+        this.direction = direction;
     }
     
     /*
     * Verde = true, rojo = false
     */
-    @Override
-    protected void generarNextEstado(){
-        if(estadoSemaforo){
-            super.generarNextEstado();
-        }else{
-        boolean nextCeldaAceptaCoche = nextCelda.nextEstadoAceptaCoche();
-            if (tieneCoche()){ //si hay coches en la celda
-                    nextEstadoAceptaCoche = false;
-                    nextEstadoTieneCoche = true;
-            }else{ //si no hay coches en la celda
-                if (prevCelda.tieneCoche())
-                    nextEstadoAceptaCoche = nextEstadoTieneCoche = true;
-                else{
-                    nextEstadoAceptaCoche = true;
-                    nextEstadoTieneCoche = false;
-                }
-            }
-        }
-    }
     
     public boolean getEstadoSemaforo(){
         return estadoSemaforo;
     }
     
-    public void actualizarSemaforo(boolean nuevoEstado){
-        this.estadoSemaforo = nuevoEstado;
+    public void setNextEstado(boolean nextEstadoTieneCoche, boolean nextEstadoSemaforo){
+        this.nextEstadoTieneCoche = nextEstadoTieneCoche;
+        this.nextEstadoSemaforo = nextEstadoSemaforo;
     }
-    
+
+    public void applyNextEstado(){
+        super.applyNextEstado();
+        estadoSemaforo = nextEstadoSemaforo;
+    }
 }

@@ -14,46 +14,21 @@ public class Celda {
     private static int idSeed = 0;
     private final int id;
     
-    //Tipo de celda
     protected char tipo;
     
-    //Estado actual, solo se edita con el AplyState para aplicar el siguiente estado
     private boolean tieneCoche;
-    
-    //Estado siguiente, se trata con el generarNextEstado, que tiene que implementar cada celda
     protected boolean nextEstadoTieneCoche;
-    protected boolean nextEstadoAceptaCoche;
-    
-    //Celdas vecinas
-    protected Celda prevCelda;
-    protected Celda nextCelda;
     
     public Celda(){
         this.tieneCoche = false;
         
         this.nextEstadoTieneCoche = false;
-        this.nextEstadoAceptaCoche = true;
         
-        prevCelda = null;
-        nextCelda = null;
         idSeed++;
         id = idSeed;
         tipo = 'c';
     }
     
-    public Celda(Celda prevCelda, Celda nextCelda) {
-        this.tieneCoche = false;
-        
-        this.nextEstadoTieneCoche = false;
-        this.nextEstadoAceptaCoche = true;
-        
-        this.prevCelda = prevCelda;
-        this.nextCelda = nextCelda;
-        idSeed++;
-        id = idSeed;
-        tipo = 'c';
-    }
-
     public int getId() {
         return id;
     }
@@ -65,59 +40,14 @@ public class Celda {
     public boolean tieneCoche(){
         return tieneCoche;
     }
-    /**
-     * 1.- Aquí se genera el nuevo estado, debe sobreescribirse siempre.
-     * 2.- También se debe encargar de ejecutar el nextEstadoAceptaCoche de las
-     * siguientes celdas.
-     */
-    protected void generarNextEstado(){
-        boolean nextCeldaAceptaCoche = nextCelda.nextEstadoAceptaCoche();
-        if (tieneCoche()){ //si hay coches en la celda
-            if (nextCeldaAceptaCoche)
-                if (prevCelda.tieneCoche())
-                    nextEstadoAceptaCoche = nextEstadoTieneCoche = true;
-                else {
-                    nextEstadoAceptaCoche = true;
-                    nextEstadoTieneCoche = false;
-                }
-            else{
-                nextEstadoAceptaCoche = false;
-                nextEstadoTieneCoche = true;
-            }
-        }else{ //si no hay coches en la celda
-            if (prevCelda.tieneCoche)
-                nextEstadoAceptaCoche = nextEstadoTieneCoche = true;
-            else{
-                nextEstadoAceptaCoche = false;
-                nextEstadoTieneCoche = false;
-            }
-        }
+    
+    public void setNextEstado(boolean nextEstadoTieneCoche){
+        this.nextEstadoTieneCoche = nextEstadoTieneCoche;
     }
 
-    public boolean nextEstadoAceptaCoche(){
-        generarNextEstado();
-        return nextEstadoAceptaCoche;
-    }
-    
-    public void applyNextState(){
+    public void applyNextEstado(){
         tieneCoche = nextEstadoTieneCoche;
+        nextEstadoTieneCoche = false;
     }
 
-    public Celda getPrevCelda() {
-        return prevCelda;
-    }
-    
-    public void setPrevCelda(Celda celda){
-        prevCelda = celda;
-    }
-
-    public Celda getNextCelda() {
-        return nextCelda;
-    }
-    
-    public void setNextCelda(Celda celda){
-        nextCelda = celda;
-    }
-    
-    
 }
