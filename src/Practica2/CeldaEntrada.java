@@ -10,21 +10,25 @@ package Practica2;
  *
  * @author alumno
  */
-public class CeldaEntrada extends Celda{
+public class CeldaEntrada implements Celda{
     private int cola;
+    private boolean nextEstadoSaleCoche;
     
     public CeldaEntrada() {
-        super();
-        tipo = 'e';
         cola = 0;
+        nextEstadoSaleCoche = false;
     }
 
     public int getCola() {
         return cola;
     }
     
-    public void addCoches(int numCoches){
+    public void incrementarCola(int numCoches){
         cola += numCoches;
+    }
+    
+    private void decrementarCola(){
+        cola--;
     }
     
     @Override
@@ -32,8 +36,28 @@ public class CeldaEntrada extends Celda{
         return cola > 0;
     }
     
-    public void decrementarCola(){
-        cola--;
+    @Override
+    public void applyNextEstado(){
+        if (nextEstadoSaleCoche) decrementarCola();
+        nextEstadoSaleCoche = false;
+    }
+
+    @Override
+    public char getTipo() {
+        return 'e';
+    }
+
+    @Override
+    public void setNextEstado(boolean nextEstadoSaleCoche) {
+        this.nextEstadoSaleCoche = nextEstadoSaleCoche;
     }
     
+    @Override
+    public String toString()
+    {
+        if (tieneCoche())
+            return "1";
+        else
+            return "0";
+    }
 }

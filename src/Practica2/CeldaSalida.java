@@ -1,22 +1,44 @@
 package Practica2;
 
-public class CeldaSalida extends Celda{
+public class CeldaSalida implements Celda{
     private static int nCochesSalientes=0;
-    
+    private boolean nextEstadoRecibeCoche;
+
     public CeldaSalida() {
-        super();
-        tipo = 's';
+        nextEstadoRecibeCoche = false;
     }
     
     @Override
     public void applyNextEstado(){
-        if (super.nextEstadoTieneCoche)
+        if (nextEstadoRecibeCoche)
             nCochesSalientes++;
-        super.applyNextEstado();
+        nextEstadoRecibeCoche = false;
     }
     
     public int getCochesSalientes(){
         return nCochesSalientes;
     }
+
+    @Override
+    public char getTipo() {
+        return 's';
+    }
+
+    @Override
+    public boolean tieneCoche() {
+        return false;
+    }
+
+    @Override
+    public void setNextEstado(boolean nextEstadoRecibeCoche) {
+        this.nextEstadoRecibeCoche = nextEstadoRecibeCoche;
+    }
     
+    @Override
+    public String toString(){
+        if (tieneCoche())
+            return "1";
+        else
+            return "0";
+    }
 }

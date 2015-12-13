@@ -9,32 +9,22 @@ package Practica2;
  *
  * @author Italo
  */
-public class CeldaInterseccion implements Celda{
-    private String direction;
-    private String nextDirection;
+public class CeldaConvencional implements Celda {
     private boolean tieneCoche;
-    protected boolean nextEstadoTieneCoche;
+    private boolean nextEstadoTieneCoche;
     
-    public CeldaInterseccion() {
-        tieneCoche = false;
-        nextEstadoTieneCoche = false;
-        direction = "Horizontal";
-    }
-    
-    public String getDirection(){
-        return direction;
+    public CeldaConvencional(){
+        this.tieneCoche = false;
+        this.nextEstadoTieneCoche = false;
     }
     
-    public void setNextDirection(String nextDirection){
-        this.nextDirection = nextDirection;
-    }
-        @Override
-    public char getTipo() {
-        return 'i';
-    }
-
     @Override
-    public boolean tieneCoche() {
+    public char getTipo() {
+        return 'c';
+    }  
+    
+    @Override
+    public boolean tieneCoche(){
         return tieneCoche;
     }
     
@@ -42,14 +32,13 @@ public class CeldaInterseccion implements Celda{
     public void setNextEstado(boolean nextEstadoTieneCoche){
         this.nextEstadoTieneCoche = nextEstadoTieneCoche;
     }
-    
+
     @Override
     public void applyNextEstado(){
         tieneCoche = nextEstadoTieneCoche;
         nextEstadoTieneCoche = false;
-        direction = nextDirection;
     }
-
+    
     @Override
     public String toString(){
         if (tieneCoche())

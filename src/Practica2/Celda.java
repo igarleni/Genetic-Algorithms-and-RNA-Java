@@ -10,44 +10,17 @@ package Practica2;
  *
  * @author alumno
  */
-public class Celda {
-    private static int idSeed = 0;
-    private final int id;
+public interface Celda {
     
-    protected char tipo;
+    public char getTipo();
     
-    private boolean tieneCoche;
-    protected boolean nextEstadoTieneCoche;
+    public boolean tieneCoche();
     
-    public Celda(){
-        this.tieneCoche = false;
-        
-        this.nextEstadoTieneCoche = false;
-        
-        idSeed++;
-        id = idSeed;
-        tipo = 'c';
-    }
-    
-    public int getId() {
-        return id;
-    }
+    public void setNextEstado(boolean nextEstadoTieneCoche);
 
-    public char getTipo() {
-        return tipo;
-    }  
+    public void applyNextEstado();
     
-    public boolean tieneCoche(){
-        return tieneCoche;
-    }
-    
-    public void setNextEstado(boolean nextEstadoTieneCoche){
-        this.nextEstadoTieneCoche = nextEstadoTieneCoche;
-    }
-
-    public void applyNextEstado(){
-        tieneCoche = nextEstadoTieneCoche;
-        nextEstadoTieneCoche = false;
-    }
+    @Override
+    public String toString();
 
 }
