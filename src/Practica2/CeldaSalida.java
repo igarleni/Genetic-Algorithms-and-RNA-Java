@@ -1,24 +1,32 @@
 package Practica2;
 
 public class CeldaSalida implements Celda{
-    private static int nCochesSalientes=0;
+    private static int totalCochesSalientes=0;
+    private int cochesSalientes;
     private boolean nextEstadoRecibeCoche;
 
     public CeldaSalida() {
         nextEstadoRecibeCoche = false;
+        cochesSalientes = 0;
     }
     
     @Override
     public void applyNextEstado(){
-        if (nextEstadoRecibeCoche)
-            nCochesSalientes++;
+        if (nextEstadoRecibeCoche){
+            cochesSalientes++;
+            totalCochesSalientes++;
+        }
         nextEstadoRecibeCoche = false;
     }
     
     public int getCochesSalientes(){
-        return nCochesSalientes;
+        return cochesSalientes;
     }
 
+    public int getTotalCochesSalientes(){
+        return totalCochesSalientes;
+    }
+    
     @Override
     public char getTipo() {
         return 's';
@@ -36,9 +44,6 @@ public class CeldaSalida implements Celda{
     
     @Override
     public String toString(){
-        if (tieneCoche())
-            return "1";
-        else
-            return "0";
+        return Integer.toString(cochesSalientes);
     }
 }

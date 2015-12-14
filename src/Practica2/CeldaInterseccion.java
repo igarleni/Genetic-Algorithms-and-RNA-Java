@@ -46,7 +46,6 @@ public class CeldaInterseccion implements Celda{
     @Override
     public void applyNextEstado(){
         tieneCoche = nextEstadoTieneCoche;
-        nextEstadoTieneCoche = false;
         direction = nextDirection;
     }
 

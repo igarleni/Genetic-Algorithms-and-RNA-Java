@@ -95,12 +95,12 @@ public class Tablero {
     
     public void avanzarTurno(){
         //1.-generar estado siguiente de cada ArrayList
-        //generarNextEstado(horizontal1);
+        generarNextEstado(horizontal1);
         //generarNextEstado(horizontal2);
         generarNextEstado(vertical1);
         //generarNextEstado(vertical2);
         //2.-aplicarlo
-        //aplyNextEstado(horizontal1);
+        aplyNextEstado(horizontal1);
         //aplyNextEstado(horizontal2);
         aplyNextEstado(vertical1);
        // aplyNextEstado(vertical2);
@@ -108,7 +108,7 @@ public class Tablero {
 
     private void generarNextEstado(ArrayList<Celda> road) {
         //entrada
-        CeldaEntrada entrada = (CeldaEntrada) road.get(0);
+        Celda entrada = road.get(0);
         Celda siguiente = road.get(1);
         if (!siguiente.tieneCoche() && entrada.tieneCoche())
             entrada.setNextEstado(true);
@@ -120,45 +120,44 @@ public class Tablero {
             //dos primeras celdas
             int indexExtra = 1+i*5;
             for (int j = indexExtra; j < indexExtra + 2; j++) {
-                if (road.get(j-1).tieneCoche() //prevCelda
-                        || road.get(j).tieneCoche() && road.get(j+1).tieneCoche() //actual & nextCelda
-                        )
-                    road.get(j).setNextEstado(true);
-                else
-                    road.get(j).setNextEstado(false);
+                tratarCelda(j, road);
             }
             
             //semaforo e interseccion
             CeldaSemaforo semaforo = (CeldaSemaforo)(road.get(indexExtra+2));
             CeldaInterseccion interseccion = (CeldaInterseccion) (road.get(indexExtra+3));
             if (semaforo.getEstadoSemaforo()){
-                //semaforo
-                if (road.get(indexExtra+1).tieneCoche()  //prevCelda
-                        || semaforo.tieneCoche() && interseccion.tieneCoche() //semaforo & nextCelda
-                        )
-                    road.get(indexExtra+2).setNextEstado(true);
-                else
-                    road.get(indexExtra+2).setNextEstado(false);
+                //semaforo verde
+                tratarCelda(indexExtra+2, road);
                 //interseccion
-                if (semaforo.tieneCoche()){
-                    road.get(indexExtra+3).setNextEstado(true);
-                    if (!interseccion.tieneCoche())
-                        ((CeldaInterseccion)(road.get(indexExtra+3))).setNextDirection(semaforo.getDirection());
+                if (interseccion.tieneCoche()){
+                    if(semaforo.getDirection().equals(interseccion.getDirection())){
+                        interseccion.setNextDirection(semaforo.getDirection());
+                        tratarCelda(indexExtra+3, road);
+                    }
+                }else{
+                    interseccion.setNextDirection(semaforo.getDirection());
+                    tratarCelda(indexExtra+3, road);
                 }
-                else if (semaforo.getDirection().equals(interseccion.getDirection())){
-                    if (road.get(indexExtra+4).tieneCoche()
-                            && interseccion.tieneCoche()
-                            )
-                        road.get(indexExtra+3).setNextEstado(true);
-                    else
-                        road.get(indexExtra+3).setNextEstado(false);
+                    
+                    
+            }else{
+                //semaforo rojo
+                if (semaforo.tieneCoche() || road.get(indexExtra+1).tieneCoche())
+                    semaforo.setNextEstado(true);
+                else
+                    semaforo.setNextEstado(false);
+                    
+                //interseccion con coche de esta dir y semaforo rojo
+                if (interseccion.tieneCoche() && semaforo.getDirection().equals(interseccion.getDirection())){
+                    if (road.get(indexExtra+4).tieneCoche()){
+                        interseccion.setNextDirection(semaforo.getDirection());
+                        interseccion.setNextEstado(true);
+                    }else
+                        interseccion.setNextEstado(false);
                 }
-            }else if (road.get(indexExtra+1).tieneCoche()  //prevCelda
-                    || semaforo.tieneCoche() //semaforo & nextCelda
-                    )
-                road.get(indexExtra+2).setNextEstado(true);
-            else
-                road.get(indexExtra+2).setNextEstado(false);
+                
+            }
             
             //postInterseccion COMPROBAR == direction?
             if (semaforo.getDirection().equals(interseccion.getDirection()) && interseccion.tieneCoche() //prevCelda
@@ -185,7 +184,19 @@ public class Tablero {
         else
             road.get(13).setNextEstado(false);
     }
-
+    
+    private void tratarCelda(int i, ArrayList<Celda> road){
+        if (road.get(i).tieneCoche()){
+            if (road.get(i+1).tieneCoche())
+                road.get(i).setNextEstado(true);
+            else
+                road.get(i).setNextEstado(false);
+        }else if ( road.get(i-1).tieneCoche())
+            road.get(i).setNextEstado(true);
+        else
+            road.get(i).setNextEstado(false);
+    }
+    
     private void aplyNextEstado(ArrayList<Celda> road) {
         for (Celda cell : road) {
             cell.applyNextEstado();
@@ -208,21 +219,35 @@ public class Tablero {
             System.out.print(celda);
             System.out.print(" ");
         }
-        //para semaforos luego
-        imprimir.get(0);
-        imprimir.get(1);
-        imprimir.get(2);
-        imprimir.get(3);
-        imprimir.get(4);
-        imprimir.get(5);
-        imprimir.get(6);
-        imprimir.get(7);
-        imprimir.get(8);
-        imprimir.get(9);
-        imprimir.get(10);
-        imprimir.get(11);
-        imprimir.get(12);
-        imprimir.get(13);
-        System.out.println();
     }
+    
+    public void imprimirTablero(){
+        for (int i = 0; i < 4; i++){
+            System.out.print("- - - - ");
+            System.out.print(vertical1.get(i));
+            System.out.print(" - - - - ");
+            System.out.print(vertical2.get(i));
+            System.out.println(" - - - - ");
+        }
+        imprimirRoad(1);
+        System.out.println();
+        for (int i = 5; i < 9; i++){
+            System.out.print("- - - - ");
+            System.out.print(vertical1.get(i));
+            System.out.print(" - - - - ");
+            System.out.print(vertical2.get(i));
+            System.out.println(" - - - - ");
+        }
+        imprimirRoad(2);
+        System.out.println();
+        for (int i = 11; i < 14; i++){
+            System.out.print("- - - - ");
+            System.out.print(vertical1.get(i));
+            System.out.print(" - - - - ");
+            System.out.print(vertical2.get(i));
+            System.out.println(" - - - - ");
+        }
+        
+    }
+
 }
