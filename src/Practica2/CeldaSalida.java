@@ -23,8 +23,11 @@ public class CeldaSalida implements Celda{
         return cochesSalientes;
     }
 
-    public int getTotalCochesSalientes(){
+    public static int getTotalCochesSalientes(){
         return totalCochesSalientes;
+    }
+    public static void setTotalCochesSalientes(int totalCochesSalientes){
+        CeldaSalida.totalCochesSalientes = totalCochesSalientes;
     }
     
     @Override

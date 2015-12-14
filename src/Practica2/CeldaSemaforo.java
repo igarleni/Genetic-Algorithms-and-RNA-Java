@@ -4,7 +4,6 @@ public class CeldaSemaforo implements Celda{
     private boolean tieneCoche;
     private boolean nextEstadoTieneCoche;
     private boolean estadoSemaforo;
-    private boolean nextEstadoSemaforo;
     private final String direction;
 
     public String getDirection() {
@@ -13,7 +12,7 @@ public class CeldaSemaforo implements Celda{
     
     public CeldaSemaforo(String direction) {
         super();
-        nextEstadoSemaforo = estadoSemaforo = true;
+        estadoSemaforo = true;
         this.direction = direction;
     }
     
@@ -25,15 +24,13 @@ public class CeldaSemaforo implements Celda{
         return estadoSemaforo;
     }
     
-    public void setNextEstadoSemaforo(boolean nextEstadoSemaforo){
-        this.nextEstadoSemaforo = nextEstadoSemaforo;
+    public void setEstadoSemaforo(boolean estadoSemaforo){
+        this.estadoSemaforo = estadoSemaforo;
     }
 
     @Override
     public void applyNextEstado(){
         tieneCoche = nextEstadoTieneCoche;
-        nextEstadoTieneCoche = false;
-        estadoSemaforo = nextEstadoSemaforo;
     }
 
     @Override

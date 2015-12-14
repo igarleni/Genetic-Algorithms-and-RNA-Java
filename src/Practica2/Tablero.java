@@ -74,17 +74,17 @@ public class Tablero {
     public void cambiarSemaforos(boolean arribaIzquierda, boolean abajoIzquierda,
             boolean arribaDerecha, boolean abajoDerecha){
         //arriba izquierda
-        semaforos[0].setNextEstadoSemaforo(arribaIzquierda);
-        semaforos[1].setNextEstadoSemaforo(!arribaIzquierda);
+        semaforos[0].setEstadoSemaforo(arribaIzquierda);
+        semaforos[1].setEstadoSemaforo(!arribaIzquierda);
         //abajo izquierda
-        semaforos[2].setNextEstadoSemaforo(abajoIzquierda);
-        semaforos[3].setNextEstadoSemaforo(!abajoIzquierda);
+        semaforos[2].setEstadoSemaforo(abajoIzquierda);
+        semaforos[3].setEstadoSemaforo(!abajoIzquierda);
         //arriba derecha
-        semaforos[4].setNextEstadoSemaforo(arribaDerecha);
-        semaforos[5].setNextEstadoSemaforo(!arribaDerecha);
+        semaforos[4].setEstadoSemaforo(arribaDerecha);
+        semaforos[5].setEstadoSemaforo(!arribaDerecha);
         //abajo derecha
-        semaforos[6].setNextEstadoSemaforo(abajoDerecha);
-        semaforos[7].setNextEstadoSemaforo(!abajoDerecha);
+        semaforos[6].setEstadoSemaforo(abajoDerecha);
+        semaforos[7].setEstadoSemaforo(!abajoDerecha);
     }
     
     public void addCoches(int numCoches){

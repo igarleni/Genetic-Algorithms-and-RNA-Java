@@ -36,7 +36,6 @@ public class CeldaConvencional implements Celda {
     @Override
     public void applyNextEstado(){
         tieneCoche = nextEstadoTieneCoche;
-        nextEstadoTieneCoche = false;
     }
     
     @Override

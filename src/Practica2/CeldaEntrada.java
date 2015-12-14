@@ -39,7 +39,6 @@ public class CeldaEntrada implements Celda{
     @Override
     public void applyNextEstado(){
         if (nextEstadoSaleCoche) decrementarCola();
-        nextEstadoSaleCoche = false;
     }
 
     @Override
