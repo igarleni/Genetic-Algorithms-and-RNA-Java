@@ -104,14 +104,14 @@ public class Tablero {
     public void avanzarTurno(){
         //1.-generar estado siguiente de cada ArrayList
         generarNextEstado(horizontal1);
-        //generarNextEstado(horizontal2);
+        generarNextEstado(horizontal2);
         generarNextEstado(vertical1);
-        //generarNextEstado(vertical2);
+        generarNextEstado(vertical2);
         //2.-aplicarlo
         aplyNextEstado(horizontal1);
-        //aplyNextEstado(horizontal2);
+        aplyNextEstado(horizontal2);
         aplyNextEstado(vertical1);
-       // aplyNextEstado(vertical2);
+        aplyNextEstado(vertical2);
     }
 
     private void generarNextEstado(ArrayList<Celda> road) {

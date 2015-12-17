@@ -25,7 +25,6 @@ public class Practica2 {
         //obtenerPorConsola();
         obtenerPorCodigo();
         
-        
         inicializarPoblacion();
         int dos_tercios = (tamPoblacion*2/6)*2; //dos tercios pares
         
@@ -64,7 +63,7 @@ public class Practica2 {
         System.out.println("Generacion " + maximoGeneraciones + ":= " +poblacion.get(0).getFitness());
 
         //testearTablero();
-        //testearCromosoma();
+        testearCromosoma();
     }
     
     private static void testearTablero() {
@@ -113,13 +112,9 @@ public class Practica2 {
     }
     
     private static void testearCromosoma(){
-        int test = 0;
-        do{
-            test++;
-            System.out.println("Test " + test);
-            inicializarPoblacion();
-            poblacion.sort(null);
-        }while (poblacion.get(0).getFitness()<1);
+        
+        inicializarPoblacion();
+        poblacion.sort(null);
         System.out.println("Fin de busqueda de cromosoma, Fitness: " + poblacion.get(0).getFitness());
         
         //Cromosoma a testear
@@ -167,7 +162,7 @@ public class Practica2 {
     }
 
     private static void obtenerPorCodigo(){
-        maximoGeneraciones = 100;
+        maximoGeneraciones = 20;
         tamPoblacion = 100;
     }
     
