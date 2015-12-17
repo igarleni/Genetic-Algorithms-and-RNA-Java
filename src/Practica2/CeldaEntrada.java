@@ -54,9 +54,6 @@ public class CeldaEntrada implements Celda{
     @Override
     public String toString()
     {
-        if (tieneCoche())
-            return "1";
-        else
-            return "0";
+        return Integer.toString(cola);
     }
 }

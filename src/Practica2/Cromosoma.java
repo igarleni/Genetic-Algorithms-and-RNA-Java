@@ -9,7 +9,7 @@ package Practica2;
  * @author usuario
  */
 public class Cromosoma implements Comparable{
-    private final boolean[] cromosoma;
+    private final boolean[] cromosoma; //length --> 4x12 = 48
     private final float fitness;
 
     public Cromosoma(boolean[] cromosoma) {
@@ -29,17 +29,16 @@ public class Cromosoma implements Comparable{
             for (int i = 0; i < cromosoma.length; i+=4) {
                 tablero.cambiarSemaforos(cromosoma[i], cromosoma[i+1], cromosoma[i+2], cromosoma[i+3]);
                 for (int j = 0; j < 10; j++) {
-                    tablero.avanzarTurno();
                     if (j==4){
                         tablero.addCoches(1);
                         cochesEntrantes = cochesEntrantes + 4;
                     }
+                    tablero.avanzarTurno();
                 }
             }
         }
-        float resultado = (float)CeldaSalida.getTotalCochesSalientes();
+        float resultado = tablero.getCochesSalientes();
         resultado /= cochesEntrantes;
-        CeldaSalida.setTotalCochesSalientes(0);
         return resultado;
     }
 
@@ -49,7 +48,9 @@ public class Cromosoma implements Comparable{
 
     @Override
     public int compareTo(Object cromosoma) {
-        if (((Cromosoma)cromosoma).getFitness() < fitness)
+        if(((Cromosoma)cromosoma).getFitness() == fitness)
+            return 0;
+        else if (((Cromosoma)cromosoma).getFitness() > fitness)
             return 1;
         else
             return -1;

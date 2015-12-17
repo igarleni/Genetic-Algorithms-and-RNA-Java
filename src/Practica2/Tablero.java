@@ -93,6 +93,14 @@ public class Tablero {
         }
     }
     
+    public int getCochesSalientes(){
+        int resultado = 0;
+        for (CeldaSalida salida : salidas) {
+            resultado += salida.getCochesSalientes();
+        }
+        return resultado;
+    }
+    
     public void avanzarTurno(){
         //1.-generar estado siguiente de cada ArrayList
         generarNextEstado(horizontal1);
@@ -160,11 +168,10 @@ public class Tablero {
             }
             
             //postInterseccion COMPROBAR == direction?
-            if (semaforo.getDirection().equals(interseccion.getDirection()) && interseccion.tieneCoche() //prevCelda
-                    || road.get(indexExtra+4).tieneCoche() && road.get(indexExtra+5).tieneCoche() //actual & nextCelda
+            if (semaforo.getDirection().equals(interseccion.getDirection())
                     )
-                road.get(indexExtra+4).setNextEstado(true);
-            else
+                tratarCelda(indexExtra+4, road);
+            else if (road.get(indexExtra+4).tieneCoche() && road.get(indexExtra+5).tieneCoche())
                 road.get(indexExtra+4).setNextEstado(false);
         }
         

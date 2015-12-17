@@ -1,7 +1,6 @@
 package Practica2;
 
 public class CeldaSalida implements Celda{
-    private static int totalCochesSalientes=0;
     private int cochesSalientes;
     private boolean nextEstadoRecibeCoche;
 
@@ -14,7 +13,6 @@ public class CeldaSalida implements Celda{
     public void applyNextEstado(){
         if (nextEstadoRecibeCoche){
             cochesSalientes++;
-            totalCochesSalientes++;
         }
         nextEstadoRecibeCoche = false;
     }
@@ -23,13 +21,6 @@ public class CeldaSalida implements Celda{
         return cochesSalientes;
     }
 
-    public static int getTotalCochesSalientes(){
-        return totalCochesSalientes;
-    }
-    public static void setTotalCochesSalientes(int totalCochesSalientes){
-        CeldaSalida.totalCochesSalientes = totalCochesSalientes;
-    }
-    
     @Override
     public char getTipo() {
         return 's';
