@@ -11,21 +11,18 @@ package Practica3;
 public class Cromosoma implements Comparable{
     private final boolean[] cromosoma; //length --> 4x12 = 48
     private final float fitnessSemaforos;
-    private final float fitnessAceleraciones;
+    private final float
 
     public Cromosoma(boolean[] cromosoma) {
         this.cromosoma = cromosoma;
-        float[] fitness = calcularFitness();
-        this.fitnessSemaforos = fitness[0];
-        this.fitnessAceleraciones = fitness[1];
-        
+        this.fitnessSemaforos = calcularFitnessSemaforos();
     }
 
     public float getFitnessSemaforos() {
         return fitnessSemaforos;
     }
 
-    private float[] calcularFitness(){
+    private float calcularFitnessSemaforos(){
         Tablero tablero = new Tablero();
         //Simulacion
         int cochesEntrantes = 0;
@@ -41,12 +38,9 @@ public class Cromosoma implements Comparable{
                 }
             }
         }
-        float resultado1 = tablero.getCochesSalientes();
-        resultado1 /= cochesEntrantes;
-        
-        float resultado2 = tablero.getAceleraciones();
-        
-        return new float[] {resultado1, resultado2};
+        float resultado = tablero.getCochesSalientes();
+        resultado /= cochesEntrantes;
+        return resultado;
     }
 
     public boolean[] getCromosoma() {

@@ -13,14 +13,13 @@ public class CeldaConvencional implements Celda {
     private boolean tieneCoche;
     private boolean nextEstadoTieneCoche;
     private boolean estadoCarretera;
-    private int coche;
-    private boolean aceleracion;
+    private int aceleraciones;
     
     public CeldaConvencional(){
         this.tieneCoche = false;
         this.nextEstadoTieneCoche = false;
+        this.aceleraciones = 0;
         this.estadoCarretera = true;
-        this.aceleracion = false;
     }
     
     @Override
@@ -34,9 +33,8 @@ public class CeldaConvencional implements Celda {
     }
     
     @Override
-    public void setNextEstado(boolean nextEstadoTieneCoche, int coche){
+    public void setNextEstado(boolean nextEstadoTieneCoche){
         this.nextEstadoTieneCoche = nextEstadoTieneCoche;
-        this.coche = coche;
     }
 
     @Override
@@ -44,19 +42,17 @@ public class CeldaConvencional implements Celda {
         tieneCoche = nextEstadoTieneCoche;
         if(nextEstadoTieneCoche && tieneCoche && estadoCarretera){
             estadoCarretera = false;
-            aceleracion = true;
+            aceleraciones++;
         }
         else if(!nextEstadoTieneCoche && tieneCoche && !estadoCarretera){
             estadoCarretera = true;
-            aceleracion = true;
+            aceleraciones++;
         }
-        else
-            aceleracion = false;
     }
     
     @Override
-    public boolean getAceleracion(){
-        return aceleracion;
+    public int getAceleraciones(){
+        return aceleraciones;
     } 
     
     @Override
@@ -65,11 +61,6 @@ public class CeldaConvencional implements Celda {
             return "1";
         else
             return "0";
-    }
-
-    @Override
-    public int getCoche() {
-        return coche;
     }
 
 }

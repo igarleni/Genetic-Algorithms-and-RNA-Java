@@ -16,13 +16,11 @@ public interface Celda {
     
     public boolean tieneCoche();
     
-    public void setNextEstado(boolean nextEstadoTieneCoche, int coche);
+    public void setNextEstado(boolean nextEstadoTieneCoche);
 
     public void applyNextEstado();
     
-    public boolean getAceleracion();
-    
-    public int getCoche();
+    public int getAceleraciones();
     
     @Override
     public String toString();
