@@ -11,7 +11,7 @@ import java.util.Scanner;
  *
  * @author usuario
  */
-public class Practica2 {
+public class Practica3 {
 
     private static int maximoGeneraciones;
     private static int tamPoblacion;

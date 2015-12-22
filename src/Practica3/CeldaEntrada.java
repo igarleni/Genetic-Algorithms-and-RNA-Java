@@ -13,12 +13,12 @@ package Practica3;
 public class CeldaEntrada implements Celda{
     private int cola;
     private boolean nextEstadoSaleCoche;
-    private int aceleraciones;
+    private int coche;
+    private boolean aceleracion;
     
     public CeldaEntrada() {
         cola = 0;
         nextEstadoSaleCoche = false;
-        aceleraciones = 0;
     }
 
     public int getCola() {
@@ -42,13 +42,15 @@ public class CeldaEntrada implements Celda{
     public void applyNextEstado(){
         if (nextEstadoSaleCoche){
             decrementarCola();
-            aceleraciones++;
+            aceleracion = true;
         }
+        else
+            aceleracion = false;
     }
     
     @Override
-    public int getAceleraciones(){
-        return aceleraciones;
+    public boolean getAceleracion(){
+        return aceleracion;
     }
 
     @Override
@@ -56,9 +58,11 @@ public class CeldaEntrada implements Celda{
         return 'e';
     }
 
+    //en coche se pone el coche que queda en la cabeza de la cola
     @Override
-    public void setNextEstado(boolean nextEstadoSaleCoche) {
+    public void setNextEstado(boolean nextEstadoSaleCoche, int coche) {
         this.nextEstadoSaleCoche = nextEstadoSaleCoche;
+        this.coche = coche;
     }
     
     @Override

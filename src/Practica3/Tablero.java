@@ -18,12 +18,15 @@ public class Tablero {
     private final ArrayList<Celda> vertical1; //road 3
     private final ArrayList<Celda> vertical2; //road 4
     
+    private final ArrayList<Integer> coches;
     private final CeldaEntrada[] entradas;
     private final CeldaSemaforo[] semaforos;
     private final CeldaInterseccion[] intersecciones;
     private final CeldaSalida[] salidas;
 
     public Tablero() {
+        coches = new ArrayList<>();
+        
         entradas = new CeldaEntrada[]{
             new CeldaEntrada(), new CeldaEntrada(),
             new CeldaEntrada(), new CeldaEntrada() };
@@ -97,6 +100,30 @@ public class Tablero {
         int resultado = 0;
         for (CeldaSalida salida : salidas) {
             resultado += salida.getCochesSalientes();
+        }
+        return resultado;
+    }
+    
+    public int getAceleraciones() {
+        int resultado = 0;
+        for (Celda celda : horizontal1) {
+            if (!(celda.getTipo() == 'i'))
+                resultado += celda.getAceleraciones();
+        }
+        for (Celda celda : horizontal2) {
+            if (!(celda.getTipo() == 'i'))
+                resultado += celda.getAceleraciones();
+        }
+        for (Celda celda : vertical1) {
+            if (!(celda.getTipo() == 'i'))
+                resultado += celda.getAceleraciones();
+        }
+        for (Celda celda : vertical2) {
+            if (!(celda.getTipo() == 'i'))
+                resultado += celda.getAceleraciones();
+        }
+        for (CeldaInterseccion interseccion : intersecciones) {
+            resultado += interseccion.getAceleraciones();
         }
         return resultado;
     }
