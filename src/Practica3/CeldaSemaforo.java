@@ -5,6 +5,8 @@ public class CeldaSemaforo implements Celda{
     private boolean nextEstadoTieneCoche;
     private boolean estadoSemaforo;
     private final String direction;
+    private boolean estadoCarretera;
+    private int aceleraciones;
 
     public String getDirection() {
         return direction;
@@ -14,6 +16,8 @@ public class CeldaSemaforo implements Celda{
         super();
         estadoSemaforo = true;
         this.direction = direction;
+        estadoCarretera = true;
+        aceleraciones = 0;
     }
     
     /*
@@ -54,5 +58,10 @@ public class CeldaSemaforo implements Celda{
             return "1";
         else
             return "0";
+    }
+
+    @Override
+    public int getAceleraciones() {
+        return aceleraciones;
     }
 }

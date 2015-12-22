@@ -20,6 +20,8 @@ public interface Celda {
 
     public void applyNextEstado();
     
+    public int getAceleraciones();
+    
     @Override
     public String toString();
 

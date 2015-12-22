@@ -10,18 +10,19 @@ package Practica3;
  */
 public class Cromosoma implements Comparable{
     private final boolean[] cromosoma; //length --> 4x12 = 48
-    private final float fitness;
+    private final float fitnessSemaforos;
+    private final float
 
     public Cromosoma(boolean[] cromosoma) {
         this.cromosoma = cromosoma;
-        this.fitness = calcularFitness();
+        this.fitnessSemaforos = calcularFitnessSemaforos();
     }
 
-    public float getFitness() {
-        return fitness;
+    public float getFitnessSemaforos() {
+        return fitnessSemaforos;
     }
 
-    private float calcularFitness(){
+    private float calcularFitnessSemaforos(){
         Tablero tablero = new Tablero();
         //Simulacion
         int cochesEntrantes = 0;
@@ -48,9 +49,9 @@ public class Cromosoma implements Comparable{
 
     @Override
     public int compareTo(Object cromosoma) {
-        if(((Cromosoma)cromosoma).getFitness() == fitness)
+        if(((Cromosoma)cromosoma).getFitnessSemaforos() == fitnessSemaforos)
             return 0;
-        else if (((Cromosoma)cromosoma).getFitness() > fitness)
+        else if (((Cromosoma)cromosoma).getFitnessSemaforos() > fitnessSemaforos)
             return 1;
         else
             return -1;
