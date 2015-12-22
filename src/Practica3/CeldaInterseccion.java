@@ -14,15 +14,11 @@ public class CeldaInterseccion implements Celda{
     private String nextDirection;
     private boolean tieneCoche;
     protected boolean nextEstadoTieneCoche;
-    private boolean estadoCarretera;
-    private int aceleraciones;
     
     public CeldaInterseccion() {
         tieneCoche = false;
         nextEstadoTieneCoche = false;
         direction = "Horizontal";
-        estadoCarretera = true;
-        aceleraciones = 0;
     }
     
     public String getDirection(){
@@ -51,14 +47,6 @@ public class CeldaInterseccion implements Celda{
     public void applyNextEstado(){
         tieneCoche = nextEstadoTieneCoche;
         direction = nextDirection;
-        if(nextEstadoTieneCoche && tieneCoche && estadoCarretera){
-            estadoCarretera = false;
-            aceleraciones++;
-        }
-        else if(!nextEstadoTieneCoche && tieneCoche && !estadoCarretera){
-            estadoCarretera = true;
-            aceleraciones++;
-        }
     }
 
     @Override
@@ -67,11 +55,6 @@ public class CeldaInterseccion implements Celda{
             return "1";
         else
             return "0";
-    }
-
-    @Override
-    public int getAceleraciones() {
-        return aceleraciones;
     }
 
 }

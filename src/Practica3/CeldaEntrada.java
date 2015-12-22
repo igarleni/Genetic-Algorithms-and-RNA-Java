@@ -13,12 +13,10 @@ package Practica3;
 public class CeldaEntrada implements Celda{
     private int cola;
     private boolean nextEstadoSaleCoche;
-    private int aceleraciones;
     
     public CeldaEntrada() {
         cola = 0;
         nextEstadoSaleCoche = false;
-        aceleraciones = 0;
     }
 
     public int getCola() {
@@ -40,15 +38,7 @@ public class CeldaEntrada implements Celda{
     
     @Override
     public void applyNextEstado(){
-        if (nextEstadoSaleCoche){
-            decrementarCola();
-            aceleraciones++;
-        }
-    }
-    
-    @Override
-    public int getAceleraciones(){
-        return aceleraciones;
+        if (nextEstadoSaleCoche) decrementarCola();
     }
 
     @Override

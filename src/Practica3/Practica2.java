@@ -28,7 +28,7 @@ public class Practica2 {
         
         for (int i = 0; i < maximoGeneraciones; i++) {
             poblacion.sort(null); //ordenamos por fitness
-            System.out.println("Generacion " + i + ":= " +poblacion.get(0).getFitnessSemaforos());
+            System.out.println("Generacion " + i + ":= " +poblacion.get(0).getFitness());
             
             //cortar dos tercios
             while (poblacion.size() > dos_tercios){
@@ -58,7 +58,7 @@ public class Practica2 {
         }
         
         poblacion.sort(null); //ordenamos por fitness
-        System.out.println("Generacion " + maximoGeneraciones + ":= " +poblacion.get(0).getFitnessSemaforos());
+        System.out.println("Generacion " + maximoGeneraciones + ":= " +poblacion.get(0).getFitness());
 
         //testearTablero();
         testearCromosoma();
@@ -113,7 +113,7 @@ public class Practica2 {
         
         inicializarPoblacion();
         poblacion.sort(null);
-        System.out.println("Fin de busqueda de cromosoma, Fitness: " + poblacion.get(0).getFitnessSemaforos());
+        System.out.println("Fin de busqueda de cromosoma, Fitness: " + poblacion.get(0).getFitness());
         
         //Cromosoma a testear
         boolean[] cromosoma = poblacion.get(0).getCromosoma();
@@ -131,7 +131,7 @@ public class Practica2 {
                     }
                     tablero.avanzarTurno();
                     tablero.imprimirTablero();
-                    System.out.print("Fitness: " + poblacion.get(0).getFitnessSemaforos());
+                    System.out.print("Fitness: " + poblacion.get(0).getFitness());
                     System.out.print(", Coches entrantes: " + cochesEntrantes);
                     System.out.println(", Coches salientes: " + tablero.getCochesSalientes());
                     try {
@@ -209,12 +209,12 @@ public class Practica2 {
         //cálculo de probabilidad de seleccion dependiendo de su fitness
         float sumFitness = 0;
         for (Cromosoma cromosoma : poblacion) {
-            sumFitness += cromosoma.getFitnessSemaforos();
+            sumFitness += cromosoma.getFitness();
         }
         
         float[] probabilidades = new float[poblacion.size()];
         for (int i = 0; i < probabilidades.length; i++) {
-            probabilidades[i] = poblacion.get(i).getFitnessSemaforos()/sumFitness;
+            probabilidades[i] = poblacion.get(i).getFitness()/sumFitness;
         }
         return probabilidades;
     }
@@ -228,17 +228,17 @@ public class Practica2 {
         luchadores[1] = poblacion.get(Math.round((float)((tamPoblacion-1)*Math.random())));
         //luchar con probabilidad de ganador el peor
         if (Math.random() < 0.7)
-            resultado[0] = (luchadores[0].getFitnessSemaforos() > luchadores[1].getFitnessSemaforos()) ? luchadores[0] : luchadores[1];
+            resultado[0] = (luchadores[0].getFitness() > luchadores[1].getFitness()) ? luchadores[0] : luchadores[1];
         else
-            resultado[0] = (luchadores[0].getFitnessSemaforos() > luchadores[1].getFitnessSemaforos()) ? luchadores[0] : luchadores[1];
+            resultado[0] = (luchadores[0].getFitness() > luchadores[1].getFitness()) ? luchadores[0] : luchadores[1];
             
         //MADRE
         luchadores[0] = poblacion.get(Math.round((float)((tamPoblacion-1)*Math.random())));
         luchadores[1] = poblacion.get(Math.round((float)((tamPoblacion-1)*Math.random())));
         if (Math.random() < 0.7)
-            resultado[1] = (luchadores[0].getFitnessSemaforos() > luchadores[1].getFitnessSemaforos()) ? luchadores[0] : luchadores[1];
+            resultado[1] = (luchadores[0].getFitness() > luchadores[1].getFitness()) ? luchadores[0] : luchadores[1];
         else
-            resultado[1] = (luchadores[0].getFitnessSemaforos() > luchadores[1].getFitnessSemaforos()) ? luchadores[0] : luchadores[1];
+            resultado[1] = (luchadores[0].getFitness() > luchadores[1].getFitness()) ? luchadores[0] : luchadores[1];
         
         return resultado;
     }
