@@ -37,6 +37,11 @@ public class CeldaSalida implements Celda{
     }
     
     @Override
+    public int getAceleraciones() {
+        return 0;
+    }
+    
+    @Override
     public String toString(){
         return Integer.toString(cochesSalientes);
     }

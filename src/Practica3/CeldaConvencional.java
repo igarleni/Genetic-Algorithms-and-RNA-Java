@@ -12,10 +12,14 @@ package Practica3;
 public class CeldaConvencional implements Celda {
     private boolean tieneCoche;
     private boolean nextEstadoTieneCoche;
+    private boolean estadoCarretera;
+    private int aceleraciones;
     
     public CeldaConvencional(){
         this.tieneCoche = false;
         this.nextEstadoTieneCoche = false;
+        this.aceleraciones = 0;
+        this.estadoCarretera = true;
     }
     
     @Override
@@ -35,9 +39,22 @@ public class CeldaConvencional implements Celda {
 
     @Override
     public void applyNextEstado(){
+        if(nextEstadoTieneCoche && tieneCoche && estadoCarretera){
+            estadoCarretera = false;
+            aceleraciones++;
+        }
+        else if(!nextEstadoTieneCoche && tieneCoche && !estadoCarretera){
+            estadoCarretera = true;
+            aceleraciones++;
+        }
         tieneCoche = nextEstadoTieneCoche;
     }
     
+    @Override
+    public int getAceleraciones(){
+        return aceleraciones;
+    } 
+        
     @Override
     public String toString(){
         if (tieneCoche())
