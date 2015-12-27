@@ -11,24 +11,34 @@ import java.util.Scanner;
  *
  * @author usuario
  */
-public class Practica2 {
+public class Practica3 {
 
     private static int maximoGeneraciones;
     private static int tamPoblacion;
     private static ArrayList<Cromosoma> poblacion;
     private static ArrayList<Cromosoma> poblacionHijo;
     
+    private static float [][][] datosPareto;
+    
     public static void main(String[] args) {
         
         //obtenerPorConsola();
         obtenerPorCodigo();
+        //testearTablero();
+        //testearCromosoma();
         
         inicializarPoblacion();
+        datosPareto = new float [maximoGeneraciones][tamPoblacion/4][2];
         int dos_tercios = (tamPoblacion*2/6)*2; //dos tercios pares
         
         for (int i = 0; i < maximoGeneraciones; i++) {
             poblacion.sort(null); //ordenamos por fitness
             System.out.println("Generacion " + i + ":= " +poblacion.get(0).getFitness());
+            //guardamos datos para pareto
+            for (int j = 0; j < datosPareto[0].length; j++){
+                datosPareto[i][j][0] = poblacion.get(j).getFitnessSemaforo();
+                datosPareto[i][j][1] = poblacion.get(j).getFitnessAceleracion();
+            }
             
             //cortar dos tercios
             while (poblacion.size() > dos_tercios){
@@ -59,9 +69,7 @@ public class Practica2 {
         
         poblacion.sort(null); //ordenamos por fitness
         System.out.println("Generacion " + maximoGeneraciones + ":= " +poblacion.get(0).getFitness());
-
-        //testearTablero();
-        testearCromosoma();
+        
     }
     
     private static void testearTablero() {
@@ -132,6 +140,7 @@ public class Practica2 {
                     tablero.avanzarTurno();
                     tablero.imprimirTablero();
                     System.out.print("Fitness: " + poblacion.get(0).getFitness());
+                    System.out.print("Fitness: " + poblacion.get(0).getFitnessAceleracion());
                     System.out.print(", Coches entrantes: " + cochesEntrantes);
                     System.out.println(", Coches salientes: " + tablero.getCochesSalientes());
                     try {

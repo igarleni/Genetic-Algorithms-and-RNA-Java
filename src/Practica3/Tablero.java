@@ -101,6 +101,23 @@ public class Tablero {
         return resultado;
     }
     
+    public int getAceleraciones(){
+        int resultado = 0;
+        for (Celda celda : horizontal1) {
+            resultado += celda.getAceleraciones();
+        }
+        for (Celda celda : horizontal2) {
+            resultado += celda.getAceleraciones();
+        }
+        for (Celda celda : vertical1) {
+            resultado += celda.getAceleraciones();
+        }
+        for (Celda celda : vertical2) {
+            resultado += celda.getAceleraciones();
+        }
+        return resultado;
+    }
+    
     public void avanzarTurno(){
         //1.-generar estado siguiente de cada ArrayList
         generarNextEstado(horizontal1);
