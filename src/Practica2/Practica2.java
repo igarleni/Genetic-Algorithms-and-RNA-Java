@@ -337,7 +337,7 @@ public class Practica2 {
     }
     
     private static void guardarDatosEnTXT() {
-        File f = new File("DatosPareto.txt");
+        File f = new File("DatosFitness.txt");
         try{
             //Limpiamos el fichero de datos antiguos
             FileWriter w = new FileWriter(f);

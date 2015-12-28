@@ -186,7 +186,7 @@ public class Practica3 {
     }
 
     private static void obtenerPorCodigo(){
-        maximoGeneraciones = 2;
+        maximoGeneraciones = 20;
         tamPoblacion = 100;
         probMutacion =0.05f;
     }
