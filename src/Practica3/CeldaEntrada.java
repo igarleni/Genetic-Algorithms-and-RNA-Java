@@ -45,7 +45,6 @@ public class CeldaEntrada implements Celda{
     public void applyNextEstado(){
         if (coche != 0){
             decrementarCola();
-            coche = 0;
         }
     }
     

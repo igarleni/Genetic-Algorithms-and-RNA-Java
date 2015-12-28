@@ -178,7 +178,6 @@ public class Tablero {
         }
         else
             entrada.setNextEstado(0);
-        ///////////ARREGLAR SALIDA///////////////////
         
         //3 celdas anteriores a la interseccion y postInterseccion x2
         for (int i = 0; i < 2; i++) {
@@ -244,6 +243,9 @@ public class Tablero {
             road.get(13).setNextEstado(1);
         else
             road.get(13).setNextEstado(0);
+        
+        //inicializacion para la entrada (necesaria para que no se dupliquen coches al calcular aceleraciones)
+        entrada.setNextEstado(0);
     }
     
     private void tratarCelda(int i, ArrayList<Celda> road){
