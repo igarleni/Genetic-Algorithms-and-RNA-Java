@@ -19,10 +19,11 @@ public class Practica3 {
 
     private static int maximoGeneraciones;
     private static int tamPoblacion;
+    private static float probMutacion;
     private static ArrayList<Cromosoma> poblacion;
     private static ArrayList<Cromosoma> poblacionHijo;
     
-    private static float [][][] datosPareto;
+    private static float [][][] datosFitness;
     
     public static void main(String[] args) {
         
@@ -32,18 +33,17 @@ public class Practica3 {
         //testearCromosoma();
         
         inicializarPoblacion();
-        datosPareto = new float [maximoGeneraciones+1][tamPoblacion/4][2];
+        datosFitness = new float [maximoGeneraciones+1][tamPoblacion/4][2];
         int dos_tercios = (tamPoblacion*2/6)*2; //dos tercios pares
         
         for (int i = 0; i < maximoGeneraciones; i++) {
             poblacion.sort(null); //ordenamos por fitness
             System.out.println("Generacion " + i + ":= " +poblacion.get(0).getFitness());
             //guardamos datos para pareto
-            for (int j = 0; j < datosPareto[0].length; j++){
-                datosPareto[i][j][0] = poblacion.get(j).getFitnessSemaforo();
-                datosPareto[i][j][1] = poblacion.get(j).getFitnessAceleracion();
+            for (int j = 0; j < datosFitness[0].length; j++){
+                datosFitness[i][j][0] = poblacion.get(j).getFitnessSemaforo();
+                datosFitness[i][j][1] = poblacion.get(j).getFitnessAceleracion();
             }
-            
             //cortar dos tercios
             while (poblacion.size() > dos_tercios){
                 poblacion.remove(dos_tercios);
@@ -66,19 +66,24 @@ public class Practica3 {
                 System.out.println("Borrado de cromosoma");
                 poblacionHijo.remove(tamPoblacion);
             }
-            mutarBigString();
+            //Mutar el numero de veces que la probabilidad dice
+            for (int j = 0; j < tamPoblacion; j++) {
+                if(Math.random()<probMutacion)
+                    mutarBigString();
+            }
             
             poblacion = new ArrayList<>(poblacionHijo);
         }
         poblacion.sort(null); //ordenamos por fitness
         System.out.println("Generacion " + maximoGeneraciones + ":= " +poblacion.get(0).getFitness());
         
-        for (int j = 0; j < datosPareto[0].length; j++){
-                datosPareto[maximoGeneraciones][j][0] = poblacion.get(j).getFitnessSemaforo();
-                datosPareto[maximoGeneraciones][j][1] = poblacion.get(j).getFitnessAceleracion();
+        //añadimos la ultima generacion a los datos
+        for (int j = 0; j < datosFitness[0].length; j++){
+                datosFitness[maximoGeneraciones][j][0] = poblacion.get(j).getFitnessSemaforo();
+                datosFitness[maximoGeneraciones][j][1] = poblacion.get(j).getFitnessAceleracion();
         }
         System.out.println("Guardando en TXT...");
-        guardarDatosEnTXT(datosPareto);
+        guardarDatosEnTXT();
         System.out.println("Guardado y Terminado!");
     }
     
@@ -175,12 +180,15 @@ public class Practica3 {
         
         System.out.println("Tamaño de la poblacion: ");
         tamPoblacion = sc.nextInt();
-
+        
+        System.out.println("Probabilidad de mutacion (1.0-0.0): ");
+        probMutacion = sc.nextFloat();
     }
 
     private static void obtenerPorCodigo(){
         maximoGeneraciones = 2;
         tamPoblacion = 100;
+        probMutacion =0.05f;
     }
     
     private static void inicializarPoblacion() {
@@ -330,7 +338,7 @@ public class Practica3 {
         poblacionHijo.add(cromosoma);
     }
 
-    private static void guardarDatosEnTXT(float[][][] datosPareto) {
+    private static void guardarDatosEnTXT() {
         File f = new File("DatosPareto.txt");
         try{
             //Limpiamos el fichero de datos antiguos
@@ -342,13 +350,13 @@ public class Practica3 {
             
             w = new FileWriter(f, true);
             bw = new BufferedWriter(w);
-            for (int i = 0; i < datosPareto.length; i++) {
+            for (int i = 0; i < datosFitness.length; i++) {
                 //Generacion i
                 bw.write("G"+i);
                 bw.newLine();
-                for (int j = 0; j < datosPareto[i].length; j++) {
-                    bw.write(String.valueOf(datosPareto[i][j][0]) + " ");
-                    bw.write(String.valueOf(datosPareto[i][j][1]));
+                for (int j = 0; j < datosFitness[i].length; j++) {
+                    bw.write(String.valueOf(datosFitness[i][j][0]) + " ");
+                    bw.write(String.valueOf(datosFitness[i][j][1]));
                     bw.newLine();
                 }
             }

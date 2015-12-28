@@ -4,6 +4,10 @@
  */
 package Practica2;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -15,21 +19,31 @@ public class Practica2 {
 
     private static int maximoGeneraciones;
     private static int tamPoblacion;
+    private static float probMutacion;
     private static ArrayList<Cromosoma> poblacion;
     private static ArrayList<Cromosoma> poblacionHijo;
+    
+    private static float [][] datosFitness;
     
     public static void main(String[] args) {
         
         //obtenerPorConsola();
         obtenerPorCodigo();
+        //testearTablero();
+        //testearCromosoma();
         
         inicializarPoblacion();
+        datosFitness = new float [maximoGeneraciones+1][tamPoblacion/4];
         int dos_tercios = (tamPoblacion*2/6)*2; //dos tercios pares
         
         for (int i = 0; i < maximoGeneraciones; i++) {
             poblacion.sort(null); //ordenamos por fitness
             System.out.println("Generacion " + i + ":= " +poblacion.get(0).getFitness());
-            
+            //guardamos datos de fitness
+            for (int j = 0; j < datosFitness.length; j++) {
+                datosFitness[i][j] = poblacion.get(j).getFitness();
+                
+            }
             //cortar dos tercios
             while (poblacion.size() > dos_tercios){
                 poblacion.remove(dos_tercios);
@@ -52,16 +66,24 @@ public class Practica2 {
                 System.out.println("Borrado de cromosoma");
                 poblacionHijo.remove(tamPoblacion);
             }
-            mutarBigString();
+            //Mutar el numero de veces que la probabilidad dice
+            for (int j = 0; j < tamPoblacion; j++) {
+                if(Math.random()<probMutacion)
+                    mutarBigString();
+            }
             
             poblacion = new ArrayList<>(poblacionHijo);
         }
         
         poblacion.sort(null); //ordenamos por fitness
         System.out.println("Generacion " + maximoGeneraciones + ":= " +poblacion.get(0).getFitness());
-
-        //testearTablero();
-        testearCromosoma();
+        //añadimos la ultima generacion a los datos
+        for (int j = 0; j < datosFitness[0].length; j++){
+                datosFitness[maximoGeneraciones][j] = poblacion.get(j).getFitness();
+        }
+        System.out.println("Guardando en TXT...");
+        guardarDatosEnTXT();
+        System.out.println("Guardado y Terminado!");
     }
     
     private static void testearTablero() {
@@ -156,12 +178,15 @@ public class Practica2 {
         
         System.out.println("Tamaño de la poblacion: ");
         tamPoblacion = sc.nextInt();
-
+        
+        System.out.println("Probabilidad de mutacion (1.0-0.0): ");
+        probMutacion = sc.nextFloat();
     }
 
     private static void obtenerPorCodigo(){
         maximoGeneraciones = 20;
         tamPoblacion = 100;
+        probMutacion =0.05f;
     }
     
     private static void inicializarPoblacion() {
@@ -311,4 +336,31 @@ public class Practica2 {
         poblacionHijo.add(cromosoma);
     }
     
+    private static void guardarDatosEnTXT() {
+        File f = new File("DatosPareto.txt");
+        try{
+            //Limpiamos el fichero de datos antiguos
+            FileWriter w = new FileWriter(f);
+            BufferedWriter bw = new BufferedWriter(w);
+            bw.write("");
+            bw.close();
+            w.close();
+            
+            w = new FileWriter(f, true);
+            bw = new BufferedWriter(w);
+            for (int i = 0; i < datosFitness.length; i++) {
+                //Generacion i
+                bw.write("G"+i);
+                bw.newLine();
+                for (int j = 0; j < datosFitness[i].length; j++) {
+                    bw.write(String.valueOf(datosFitness[i][j]));
+                    bw.newLine();
+                }
+            }
+            bw.close();
+            w.close();
+        }catch (IOException e){
+            System.out.println("Fallo en escritura!");
+        };
+    }
 }
