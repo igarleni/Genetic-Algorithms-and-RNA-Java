@@ -33,14 +33,14 @@ public class Practica2 {
         //testearCromosoma();
         
         inicializarPoblacion();
-        datosFitness = new float [maximoGeneraciones+1][tamPoblacion/4];
+        datosFitness = new float [maximoGeneraciones+1][tamPoblacion];
         int dos_tercios = (tamPoblacion*2/6)*2; //dos tercios pares
         
         for (int i = 0; i < maximoGeneraciones; i++) {
             poblacion.sort(null); //ordenamos por fitness
             System.out.println("Generacion " + i + ":= " +poblacion.get(0).getFitness());
             //guardamos datos de fitness
-            for (int j = 0; j < datosFitness.length; j++) {
+            for (int j = 0; j < datosFitness[i].length; j++) {
                 datosFitness[i][j] = poblacion.get(j).getFitness();
                 
             }
