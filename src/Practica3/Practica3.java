@@ -30,7 +30,7 @@ public class Practica3 {
         //obtenerPorConsola();
         obtenerPorCodigo();
         //testearTablero();
-        testearCromosoma();
+        //testearCromosoma();
         
         inicializarPoblacion();
         datosFitness = new float [maximoGeneraciones+1][tamPoblacion][2];
