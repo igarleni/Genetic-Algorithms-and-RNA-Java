@@ -4,6 +4,10 @@
  */
 package Practica3;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -25,10 +29,10 @@ public class Practica3 {
         //obtenerPorConsola();
         obtenerPorCodigo();
         //testearTablero();
-        testearCromosoma();
-        /*
+        //testearCromosoma();
+        
         inicializarPoblacion();
-        datosPareto = new float [maximoGeneraciones][tamPoblacion/4][2];
+        datosPareto = new float [maximoGeneraciones+1][tamPoblacion/4][2];
         int dos_tercios = (tamPoblacion*2/6)*2; //dos tercios pares
         
         for (int i = 0; i < maximoGeneraciones; i++) {
@@ -66,10 +70,16 @@ public class Practica3 {
             
             poblacion = new ArrayList<>(poblacionHijo);
         }
-        
         poblacion.sort(null); //ordenamos por fitness
         System.out.println("Generacion " + maximoGeneraciones + ":= " +poblacion.get(0).getFitness());
-        */
+        
+        for (int j = 0; j < datosPareto[0].length; j++){
+                datosPareto[maximoGeneraciones][j][0] = poblacion.get(j).getFitnessSemaforo();
+                datosPareto[maximoGeneraciones][j][1] = poblacion.get(j).getFitnessAceleracion();
+        }
+        System.out.println("Guardando en TXT...");
+        guardarDatosEnTXT(datosPareto);
+        System.out.println("Guardado y Terminado!");
     }
     
     private static void testearTablero() {
@@ -169,7 +179,7 @@ public class Practica3 {
     }
 
     private static void obtenerPorCodigo(){
-        maximoGeneraciones = 20;
+        maximoGeneraciones = 2;
         tamPoblacion = 100;
     }
     
@@ -318,6 +328,35 @@ public class Practica3 {
         datos[indice] = !datos[indice];
         cromosoma = new Cromosoma(datos);
         poblacionHijo.add(cromosoma);
+    }
+
+    private static void guardarDatosEnTXT(float[][][] datosPareto) {
+        File f = new File("DatosPareto.txt");
+        try{
+            //Limpiamos el fichero de datos antiguos
+            FileWriter w = new FileWriter(f);
+            BufferedWriter bw = new BufferedWriter(w);
+            bw.write("");
+            bw.close();
+            w.close();
+            
+            w = new FileWriter(f, true);
+            bw = new BufferedWriter(w);
+            for (int i = 0; i < datosPareto.length; i++) {
+                //Generacion i
+                bw.write("G"+i);
+                bw.newLine();
+                for (int j = 0; j < datosPareto[i].length; j++) {
+                    bw.write(String.valueOf(datosPareto[i][j][0]) + " ");
+                    bw.write(String.valueOf(datosPareto[i][j][1]));
+                    bw.newLine();
+                }
+            }
+            bw.close();
+            w.close();
+        }catch (IOException e){
+            System.out.println("Fallo en escritura!");
+        };
     }
     
 }
