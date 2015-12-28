@@ -109,7 +109,7 @@ public class Tablero {
     public float getMediaAceleracion(){
         float resultado = 0;
         //coches en el tablero
-        for (int i = 0; i < horizontal1.size(); i++) {
+        for (int i = 1; i < horizontal1.size(); i++) {
             Celda celda = horizontal1.get(i);
             if (celda.getCoche() != 0){
                 float aux = coches.get(celda.getCoche());
@@ -118,7 +118,7 @@ public class Tablero {
                 coches.add(celda.getCoche(), 0);
             }
         }
-        for (int i = 0; i < horizontal2.size(); i++) {
+        for (int i = 1; i < horizontal2.size(); i++) {
             Celda celda = horizontal2.get(i);
             if (celda.getCoche() != 0){
                 float aux = coches.get(celda.getCoche());
@@ -127,7 +127,7 @@ public class Tablero {
                 coches.add(celda.getCoche(), 0);
             }
         }
-        for (int i = 0; i < vertical1.size(); i++) {
+        for (int i = 1; i < vertical1.size(); i++) {
             Celda celda = vertical1.get(i);
             if (celda.getCoche() != 0 && celda.getTipo() != 'i'){
                 float aux = coches.get(celda.getCoche());
@@ -136,7 +136,7 @@ public class Tablero {
                 coches.add(celda.getCoche(), 0);
             }
         }
-        for (int i = 0; i < vertical2.size(); i++) {
+        for (int i = 1; i < vertical2.size(); i++) {
             Celda celda = vertical2.get(i);
             if (celda.getCoche() != 0 && celda.getTipo() != 'i'){
                 float aux = coches.get(celda.getCoche());
@@ -173,7 +173,7 @@ public class Tablero {
         CeldaEntrada entrada = (CeldaEntrada)road.get(0);
         Celda siguiente = road.get(1);
         if (siguiente.getCoche()==0 && entrada.getCola()>0){
-            coches.add(0,1);
+            coches.add(1);
             entrada.setNextEstado(coches.size()-1);
         }
         else
@@ -226,8 +226,7 @@ public class Tablero {
             }
             
             //postInterseccion COMPROBAR == direction
-            if (semaforo.getDirection().equals(interseccion.getDirection())
-                    )
+            if (semaforo.getDirection().equals(interseccion.getDirection()))
                 tratarCelda(indexExtra+4, road);
             else if (road.get(indexExtra+4).getCoche()!=0 && road.get(indexExtra+5).getCoche()!=0)
                 road.get(indexExtra+4).setNextEstado(0);
@@ -244,8 +243,6 @@ public class Tablero {
         else
             road.get(13).setNextEstado(0);
         
-        //inicializacion para la entrada (necesaria para que no se dupliquen coches al calcular aceleraciones)
-        entrada.setNextEstado(0);
     }
     
     private void tratarCelda(int i, ArrayList<Celda> road){
@@ -303,7 +300,7 @@ public class Tablero {
         }
         imprimirRoad(2);
         System.out.println();
-        for (int i = 11; i < 14; i++){
+        for (int i = 10; i < 14; i++){
             System.out.print("- - - - ");
             System.out.print(vertical1.get(i));
             System.out.print(" - - - - ");
