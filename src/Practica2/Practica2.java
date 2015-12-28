@@ -350,12 +350,10 @@ public class Practica2 {
             bw = new BufferedWriter(w);
             for (int i = 0; i < datosFitness.length; i++) {
                 //Generacion i
-                bw.write("G"+i);
-                bw.newLine();
                 for (int j = 0; j < datosFitness[i].length; j++) {
-                    bw.write(String.valueOf(datosFitness[i][j]));
-                    bw.newLine();
+                    bw.write(String.valueOf(datosFitness[i][j]) + ", ");
                 }
+                bw.newLine();
             }
             bw.close();
             w.close();
