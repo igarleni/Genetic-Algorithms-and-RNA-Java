@@ -5,6 +5,8 @@
  */
 package Practica3;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Italo
@@ -12,17 +14,18 @@ package Practica3;
 public class CeldaInterseccion implements Celda{
     private String direction;
     private String nextDirection;
-    private boolean tieneCoche;
-    protected boolean nextEstadoTieneCoche;
     private boolean estadoCarretera;
-    private int aceleraciones;
+    private int coche;
+    private int nextCoche;
+    private final ArrayList<Integer> coches;
+
     
-    public CeldaInterseccion() {
-        tieneCoche = false;
-        nextEstadoTieneCoche = false;
+    public CeldaInterseccion(ArrayList<Integer> coches) {
+        this.coche = 0;
+        this.nextCoche = 0;
+        this.coches = coches;
         direction = "Horizontal";
         estadoCarretera = true;
-        aceleraciones = 0;
     }
     
     public String getDirection(){
@@ -38,40 +41,34 @@ public class CeldaInterseccion implements Celda{
     }
 
     @Override
-    public boolean tieneCoche() {
-        return tieneCoche;
+    public int getCoche() {
+        return coche;
     }
     
     @Override
-    public void setNextEstado(boolean nextEstadoTieneCoche){
-        this.nextEstadoTieneCoche = nextEstadoTieneCoche;
+    public void setNextEstado(int nextCoche){
+        this.nextCoche = nextCoche;
     }
     
     @Override
     public void applyNextEstado(){
-        if(nextEstadoTieneCoche && tieneCoche && estadoCarretera){
-            estadoCarretera = false;
-            aceleraciones++;
+        if(coche != 0){
+            if(coche == nextCoche && estadoCarretera){
+                estadoCarretera = false;
+                coches.set(coche, coches.get(coche)+1);
+            }
+            else if(coche != nextCoche && !estadoCarretera){
+                estadoCarretera = true;
+                coches.set(coche, coches.get(coche)+1);
+            }
         }
-        else if(!nextEstadoTieneCoche && tieneCoche && !estadoCarretera){
-            estadoCarretera = true;
-            aceleraciones++;
-        }
-        tieneCoche = nextEstadoTieneCoche;
+        coche = nextCoche;
         direction = nextDirection;
     }
 
     @Override
-    public int getAceleraciones() {
-        return aceleraciones;
-    }
-    
-    @Override
     public String toString(){
-        if (tieneCoche())
-            return "1";
-        else
-            return "0";
+        return Integer.toString(coche);
     }
 
 }

@@ -12,16 +12,19 @@ package Practica3;
  */
 public class CeldaEntrada implements Celda{
     private int cola;
-    private boolean nextEstadoSaleCoche;
-    private int aceleraciones;
+    private int coche;
     
     public CeldaEntrada() {
         cola = 0;
-        nextEstadoSaleCoche = false;
-        aceleraciones = 0;
+        coche = 0;
     }
 
-    public int getCola() {
+    @Override
+    public int getCoche() {
+        return coche;
+    }
+    
+    public int getCola(){
         return cola;
     }
     
@@ -34,21 +37,16 @@ public class CeldaEntrada implements Celda{
     }
     
     @Override
-    public boolean tieneCoche(){
-        return cola > 0;
+    public void setNextEstado(int coche) {
+        this.coche = coche;
     }
     
     @Override
     public void applyNextEstado(){
-        if (nextEstadoSaleCoche){
+        if (coche != 0){
             decrementarCola();
-            aceleraciones++;
+            coche = 0;
         }
-    }
-    
-    @Override
-    public int getAceleraciones(){
-            return aceleraciones;
     }
     
     @Override
@@ -56,11 +54,6 @@ public class CeldaEntrada implements Celda{
         return 'e';
     }
 
-    @Override
-    public void setNextEstado(boolean nextEstadoSaleCoche) {
-        this.nextEstadoSaleCoche = nextEstadoSaleCoche;
-    }
-    
     @Override
     public String toString()
     {

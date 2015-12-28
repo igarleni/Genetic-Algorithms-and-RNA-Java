@@ -14,13 +14,11 @@ public interface Celda {
     
     public char getTipo();
     
-    public boolean tieneCoche();
+    public int getCoche();
     
-    public void setNextEstado(boolean nextEstadoTieneCoche);
+    public void setNextEstado(int nextCoche);
 
     public void applyNextEstado();
-    
-    public int getAceleraciones();
     
     @Override
     public String toString();

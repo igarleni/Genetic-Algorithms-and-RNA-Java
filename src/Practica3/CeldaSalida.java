@@ -2,19 +2,23 @@ package Practica3;
 
 public class CeldaSalida implements Celda{
     private int cochesSalientes;
-    private boolean nextEstadoRecibeCoche;
+    private int entraCoche;
 
     public CeldaSalida() {
-        nextEstadoRecibeCoche = false;
+        entraCoche = 0;
         cochesSalientes = 0;
     }
     
     @Override
+    public int getCoche(){
+        return 0;
+    }
+    
+    @Override
     public void applyNextEstado(){
-        if (nextEstadoRecibeCoche){
+        if (entraCoche == 1){
             cochesSalientes++;
         }
-        nextEstadoRecibeCoche = false;
     }
     
     public int getCochesSalientes(){
@@ -27,18 +31,8 @@ public class CeldaSalida implements Celda{
     }
 
     @Override
-    public boolean tieneCoche() {
-        return false;
-    }
-
-    @Override
-    public void setNextEstado(boolean nextEstadoRecibeCoche) {
-        this.nextEstadoRecibeCoche = nextEstadoRecibeCoche;
-    }
-    
-    @Override
-    public int getAceleraciones() {
-        return 0;
+    public void setNextEstado(int entraCoche) {
+        this.entraCoche = entraCoche;
     }
     
     @Override

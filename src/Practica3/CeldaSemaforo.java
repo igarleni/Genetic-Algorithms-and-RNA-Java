@@ -1,23 +1,27 @@
 package Practica3;
 
+import java.util.ArrayList;
+
 public class CeldaSemaforo implements Celda{
-    private boolean tieneCoche;
-    private boolean nextEstadoTieneCoche;
     private boolean estadoSemaforo;
     private final String direction;
+    
+    private int coche;
+    private int nextCoche;
     private boolean estadoCarretera;
-    private int aceleraciones;
+    private final ArrayList<Integer> coches;
     
     public String getDirection() {
         return direction;
     }
     
-    public CeldaSemaforo(String direction) {
-        super();
+    public CeldaSemaforo(ArrayList<Integer> coches, String direction) {
+        this.coche = 0;
+        this.nextCoche = 0;
+        this.coches = coches;
+        estadoCarretera = true;
         estadoSemaforo = true;
         this.direction = direction;
-        estadoCarretera = true;
-        aceleraciones = 0;
     }
     
     /*
@@ -33,16 +37,28 @@ public class CeldaSemaforo implements Celda{
     }
 
     @Override
+    public int getCoche(){
+        return coche;
+    }
+    
+    @Override
+    public void setNextEstado(int nextCoche) {
+        this.nextCoche = nextCoche;
+    }
+    
+    @Override
     public void applyNextEstado(){
-        if(nextEstadoTieneCoche && tieneCoche && estadoCarretera){
-            estadoCarretera = false;
-            aceleraciones++;
+        if(coche != 0){
+            if(coche == nextCoche && estadoCarretera){
+                estadoCarretera = false;
+                coches.set(coche, coches.get(coche)+1);
+            }
+            else if(coche != nextCoche && !estadoCarretera){
+                estadoCarretera = true;
+                coches.set(coche, coches.get(coche)+1);
+            }
         }
-        else if(!nextEstadoTieneCoche && tieneCoche && !estadoCarretera){
-            estadoCarretera = true;
-            aceleraciones++;
-        }
-        tieneCoche = nextEstadoTieneCoche;
+        coche = nextCoche;
     }
 
     @Override
@@ -51,25 +67,7 @@ public class CeldaSemaforo implements Celda{
     }
 
     @Override
-    public boolean tieneCoche() {
-        return tieneCoche;
-    }
-
-    @Override
-    public void setNextEstado(boolean nextEstadoTieneCoche) {
-        this.nextEstadoTieneCoche = nextEstadoTieneCoche;
-    }
-    
-    @Override
-    public int getAceleraciones() {
-        return aceleraciones;
-    }
-    
-    @Override
     public String toString(){
-        if (tieneCoche())
-            return "1";
-        else
-            return "0";
+        return Integer.toString(coche);
     }
 }

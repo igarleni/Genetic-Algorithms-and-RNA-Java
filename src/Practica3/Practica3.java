@@ -25,8 +25,8 @@ public class Practica3 {
         //obtenerPorConsola();
         obtenerPorCodigo();
         //testearTablero();
-        //testearCromosoma();
-        
+        testearCromosoma();
+        /*
         inicializarPoblacion();
         datosPareto = new float [maximoGeneraciones][tamPoblacion/4][2];
         int dos_tercios = (tamPoblacion*2/6)*2; //dos tercios pares
@@ -69,7 +69,7 @@ public class Practica3 {
         
         poblacion.sort(null); //ordenamos por fitness
         System.out.println("Generacion " + maximoGeneraciones + ":= " +poblacion.get(0).getFitness());
-        
+        */
     }
     
     private static void testearTablero() {

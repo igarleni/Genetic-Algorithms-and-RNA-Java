@@ -53,10 +53,9 @@ public class Cromosoma implements Comparable{
         float resultado1 = tablero.getCochesSalientes();
         resultado1 /= cochesEntrantes;
         
-        float resultado2 = tablero.getAceleraciones();
-        resultado2 /= 25;
-        resultado2 /= cochesEntrantes;
-        resultado2 = 1 - resultado2;
+        //ARREGLAR/////////
+        tablero.getMediaAceleracion(); //Esto destroza la variable "coches" de tablero
+        float resultado2 = 0;
         
         return new float[]{resultado1, resultado2};
     }

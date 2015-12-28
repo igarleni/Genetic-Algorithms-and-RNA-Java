@@ -22,21 +22,26 @@ public class Tablero {
     private final CeldaSemaforo[] semaforos;
     private final CeldaInterseccion[] intersecciones;
     private final CeldaSalida[] salidas;
+    
+    private final ArrayList<Integer> coches;
 
     public Tablero() {
+        coches = new ArrayList<>();
+        coches.add(0); //referencia al coche 0, que es la celda vacia
+        
         entradas = new CeldaEntrada[]{
             new CeldaEntrada(), new CeldaEntrada(),
             new CeldaEntrada(), new CeldaEntrada() };
         semaforos = new CeldaSemaforo[] {
-            new CeldaSemaforo("Horizontal"), new CeldaSemaforo("Vertical"), //0-1 semaforos arriba izquierda
-            new CeldaSemaforo("Horizontal"), new CeldaSemaforo("Vertical"), //2-3 semaforos abajo izquierda
-            new CeldaSemaforo("Horizontal"), new CeldaSemaforo("Vertical"), //4-5 semaforos arriba derecha
-            new CeldaSemaforo("Horizontal"), new CeldaSemaforo("Vertical") }; //6-7 semaforos abajo derecha
+            new CeldaSemaforo(coches,"Horizontal"), new CeldaSemaforo(coches,"Vertical"), //0-1 semaforos arriba izquierda
+            new CeldaSemaforo(coches,"Horizontal"), new CeldaSemaforo(coches,"Vertical"), //2-3 semaforos abajo izquierda
+            new CeldaSemaforo(coches,"Horizontal"), new CeldaSemaforo(coches,"Vertical"), //4-5 semaforos arriba derecha
+            new CeldaSemaforo(coches,"Horizontal"), new CeldaSemaforo(coches,"Vertical") }; //6-7 semaforos abajo derecha
         //pares+0 horizontal, impares vertical
         
         intersecciones = new CeldaInterseccion[]{
-            new CeldaInterseccion(), new CeldaInterseccion(),
-            new CeldaInterseccion(), new CeldaInterseccion() };
+            new CeldaInterseccion(coches), new CeldaInterseccion(coches),
+            new CeldaInterseccion(coches), new CeldaInterseccion(coches) };
         salidas = new CeldaSalida[]{
             new CeldaSalida(), new CeldaSalida(),
             new CeldaSalida(), new CeldaSalida() };
@@ -53,18 +58,18 @@ public class Tablero {
         ArrayList<Celda> road = new ArrayList<>();
         
         road.add(0, entradas[numRoad]);
-        road.add(1, new CeldaConvencional());
-        road.add(2, new CeldaConvencional());
+        road.add(1, new CeldaConvencional(coches));
+        road.add(2, new CeldaConvencional(coches));
         road.add(3, semaforo1);
         road.add(4, interseccion1);
-        road.add(5, new CeldaConvencional());
-        road.add(6, new CeldaConvencional());
-        road.add(7, new CeldaConvencional());
+        road.add(5, new CeldaConvencional(coches));
+        road.add(6, new CeldaConvencional(coches));
+        road.add(7, new CeldaConvencional(coches));
         road.add(8, semaforo2);
         road.add(9, interseccion2);
-        road.add(10, new CeldaConvencional());
-        road.add(11, new CeldaConvencional());
-        road.add(12, new CeldaConvencional());
+        road.add(10, new CeldaConvencional(coches));
+        road.add(11, new CeldaConvencional(coches));
+        road.add(12, new CeldaConvencional(coches));
         road.add(13, salidas[numRoad]);
         
         return road;
@@ -101,20 +106,52 @@ public class Tablero {
         return resultado;
     }
     
-    public int getAceleraciones(){
-        int resultado = 0;
-        for (Celda celda : horizontal1) {
-            resultado += celda.getAceleraciones();
+    public float getMediaAceleracion(){
+        float resultado = 0;
+        //coches en el tablero
+        for (int i = 0; i < horizontal1.size(); i++) {
+            Celda celda = horizontal1.get(i);
+            if (celda.getCoche() != 0){
+                float aux = coches.get(celda.getCoche());
+                aux = aux/(i*2+1);
+                resultado += aux;
+                coches.add(celda.getCoche(), 0);
+            }
         }
-        for (Celda celda : horizontal2) {
-            resultado += celda.getAceleraciones();
+        for (int i = 0; i < horizontal2.size(); i++) {
+            Celda celda = horizontal2.get(i);
+            if (celda.getCoche() != 0){
+                float aux = coches.get(celda.getCoche());
+                aux = aux/(i*2+1);
+                resultado += aux;
+                coches.add(celda.getCoche(), 0);
+            }
         }
-        for (Celda celda : vertical1) {
-            resultado += celda.getAceleraciones();
+        for (int i = 0; i < vertical1.size(); i++) {
+            Celda celda = vertical1.get(i);
+            if (celda.getCoche() != 0 && celda.getTipo() != 'i'){
+                float aux = coches.get(celda.getCoche());
+                aux = aux/(i*2+1);
+                resultado += aux;
+                coches.add(celda.getCoche(), 0);
+            }
         }
-        for (Celda celda : vertical2) {
-            resultado += celda.getAceleraciones();
+        for (int i = 0; i < vertical2.size(); i++) {
+            Celda celda = vertical2.get(i);
+            if (celda.getCoche() != 0 && celda.getTipo() != 'i'){
+                float aux = coches.get(celda.getCoche());
+                aux = aux/(i*2+1);
+                resultado += aux;
+                coches.add(celda.getCoche(), 0);
+            }
         }
+        
+        //resto de coches
+        for (Integer aceleracionCoche : coches) {
+            resultado += aceleracionCoche/25;
+        }
+        //media final
+        resultado /= coches.size();
         return resultado;
     }
     
@@ -133,12 +170,15 @@ public class Tablero {
 
     private void generarNextEstado(ArrayList<Celda> road) {
         //entrada
-        Celda entrada = road.get(0);
+        CeldaEntrada entrada = (CeldaEntrada)road.get(0);
         Celda siguiente = road.get(1);
-        if (!siguiente.tieneCoche() && entrada.tieneCoche())
-            entrada.setNextEstado(true);
+        if (siguiente.getCoche()==0 && entrada.getCola()>0){
+            coches.add(0,1);
+            entrada.setNextEstado(coches.size()-1);
+        }
         else
-            entrada.setNextEstado(false);
+            entrada.setNextEstado(0);
+        ///////////ARREGLAR SALIDA///////////////////
         
         //3 celdas anteriores a la interseccion y postInterseccion x2
         for (int i = 0; i < 2; i++) {
@@ -155,7 +195,7 @@ public class Tablero {
                 //semaforo verde
                 tratarCelda(indexExtra+2, road);
                 //interseccion
-                if (interseccion.tieneCoche()){
+                if (interseccion.getCoche()!=0){
                     if(semaforo.getDirection().equals(interseccion.getDirection())){
                         interseccion.setNextDirection(semaforo.getDirection());
                         tratarCelda(indexExtra+3, road);
@@ -168,57 +208,54 @@ public class Tablero {
                     
             }else{
                 //semaforo rojo
-                if (semaforo.tieneCoche() || road.get(indexExtra+1).tieneCoche())
-                    semaforo.setNextEstado(true);
+                if (semaforo.getCoche()!=0)
+                    semaforo.setNextEstado(semaforo.getCoche());
+                else if(road.get(indexExtra+1).getCoche()!=0)
+                    semaforo.setNextEstado(road.get(indexExtra+1).getCoche());
                 else
-                    semaforo.setNextEstado(false);
+                    semaforo.setNextEstado(0);
                     
                 //interseccion con coche de esta dir y semaforo rojo
-                if (interseccion.tieneCoche() && semaforo.getDirection().equals(interseccion.getDirection())){
-                    if (road.get(indexExtra+4).tieneCoche()){
+                if (interseccion.getCoche()!=0 && semaforo.getDirection().equals(interseccion.getDirection())){
+                    if (road.get(indexExtra+4).getCoche()!=0){
                         interseccion.setNextDirection(semaforo.getDirection());
-                        interseccion.setNextEstado(true);
+                        interseccion.setNextEstado(interseccion.getCoche());
                     }else
-                        interseccion.setNextEstado(false);
+                        interseccion.setNextEstado(0);
                 }
                 
             }
             
-            //postInterseccion COMPROBAR == direction?
+            //postInterseccion COMPROBAR == direction
             if (semaforo.getDirection().equals(interseccion.getDirection())
                     )
                 tratarCelda(indexExtra+4, road);
-            else if (road.get(indexExtra+4).tieneCoche() && road.get(indexExtra+5).tieneCoche())
-                road.get(indexExtra+4).setNextEstado(false);
+            else if (road.get(indexExtra+4).getCoche()!=0 && road.get(indexExtra+5).getCoche()!=0)
+                road.get(indexExtra+4).setNextEstado(0);
         }
         
         //2 celdas convencionales
         for (int j = 11; j < 13; j++) {
-            if (road.get(j-1).tieneCoche() //prevCelda
-                    || road.get(j).tieneCoche() && road.get(j+1).tieneCoche() //actual & nextCelda
-                    )
-                road.get(j).setNextEstado(true);
-            else
-                road.get(j).setNextEstado(false);
+            tratarCelda(j, road);
         }
         
         //celda salida
-        if (road.get(12).tieneCoche()) //prevCelda
-            road.get(13).setNextEstado(true);
+        if (road.get(12).getCoche()!=0) //prevCelda
+            road.get(13).setNextEstado(1);
         else
-            road.get(13).setNextEstado(false);
+            road.get(13).setNextEstado(0);
     }
     
     private void tratarCelda(int i, ArrayList<Celda> road){
-        if (road.get(i).tieneCoche()){
-            if (road.get(i+1).tieneCoche())
-                road.get(i).setNextEstado(true);
+        if (road.get(i).getCoche()!=0){
+            if (road.get(i+1).getCoche()!=0)
+                road.get(i).setNextEstado(road.get(i).getCoche());
             else
-                road.get(i).setNextEstado(false);
-        }else if ( road.get(i-1).tieneCoche())
-            road.get(i).setNextEstado(true);
+                road.get(i).setNextEstado(0);
+        }else if ( road.get(i-1).getCoche()!=0)
+            road.get(i).setNextEstado(road.get(i-1).getCoche());
         else
-            road.get(i).setNextEstado(false);
+            road.get(i).setNextEstado(0);
     }
     
     private void aplyNextEstado(ArrayList<Celda> road) {
