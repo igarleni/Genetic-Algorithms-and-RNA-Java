@@ -81,6 +81,7 @@ public class Practica2 {
         for (int j = 0; j < datosFitness[0].length; j++){
                 datosFitness[maximoGeneraciones][j] = poblacion.get(j).getFitness();
         }
+        testearCromosoma();
         System.out.println("Guardando en TXT...");
         guardarDatosEnTXT();
         System.out.println("Guardado y Terminado!");
@@ -133,9 +134,9 @@ public class Practica2 {
     
     private static void testearCromosoma(){
         
-        inicializarPoblacion();
-        poblacion.sort(null);
-        System.out.println("Fin de busqueda de cromosoma, Fitness: " + poblacion.get(0).getFitness());
+        //inicializarPoblacion();
+        //poblacion.sort(null);
+        //System.out.println("Fin de busqueda de cromosoma, Fitness: " + poblacion.get(0).getFitness());
         
         //Cromosoma a testear
         boolean[] cromosoma = poblacion.get(0).getCromosoma();

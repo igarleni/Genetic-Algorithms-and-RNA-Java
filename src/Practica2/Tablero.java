@@ -247,7 +247,7 @@ public class Tablero {
         }
         imprimirRoad(2);
         System.out.println();
-        for (int i = 11; i < 14; i++){
+        for (int i = 10; i < 14; i++){
             System.out.print("- - - - ");
             System.out.print(vertical1.get(i));
             System.out.print(" - - - - ");
