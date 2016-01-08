@@ -56,7 +56,7 @@ public class Practica2 {
             while (poblacionHijo.size()<tamPoblacion){
                 Cromosoma[] padres;
                 padres = seleccionarRuleta();
-                //cromosomas = seleccionarTorneo();
+                //padres = seleccionarTorneo();
                 
                 //cruzarTwoPoints(padres);
                 cruzarUniforme(padres);
@@ -81,7 +81,6 @@ public class Practica2 {
         for (int j = 0; j < datosFitness[0].length; j++){
                 datosFitness[maximoGeneraciones][j] = poblacion.get(j).getFitness();
         }
-        testearCromosoma();
         System.out.println("Guardando en TXT...");
         guardarDatosEnTXT();
         System.out.println("Guardado y Terminado!");
@@ -134,9 +133,8 @@ public class Practica2 {
     
     private static void testearCromosoma(){
         
-        //inicializarPoblacion();
-        //poblacion.sort(null);
-        //System.out.println("Fin de busqueda de cromosoma, Fitness: " + poblacion.get(0).getFitness());
+        inicializarPoblacion();
+        poblacion.sort(null);
         
         //Cromosoma a testear
         boolean[] cromosoma = poblacion.get(0).getCromosoma();
@@ -256,7 +254,7 @@ public class Practica2 {
         if (Math.random() < 0.7)
             resultado[0] = (luchadores[0].getFitness() > luchadores[1].getFitness()) ? luchadores[0] : luchadores[1];
         else
-            resultado[0] = (luchadores[0].getFitness() > luchadores[1].getFitness()) ? luchadores[0] : luchadores[1];
+            resultado[0] = (luchadores[0].getFitness() > luchadores[1].getFitness()) ? luchadores[1] : luchadores[0];
             
         //MADRE
         luchadores[0] = poblacion.get(Math.round((float)((tamPoblacion-1)*Math.random())));

@@ -108,10 +108,10 @@ public class Tablero {
         generarNextEstado(vertical1);
         generarNextEstado(vertical2);
         //2.-aplicarlo
-        aplyNextEstado(horizontal1);
-        aplyNextEstado(horizontal2);
-        aplyNextEstado(vertical1);
-        aplyNextEstado(vertical2);
+        applyNextEstado(horizontal1);
+        applyNextEstado(horizontal2);
+        applyNextEstado(vertical1);
+        applyNextEstado(vertical2);
     }
 
     private void generarNextEstado(ArrayList<Celda> road) {
@@ -204,7 +204,7 @@ public class Tablero {
             road.get(i).setNextEstado(false);
     }
     
-    private void aplyNextEstado(ArrayList<Celda> road) {
+    private void applyNextEstado(ArrayList<Celda> road) {
         for (Celda cell : road) {
             cell.applyNextEstado();
         }

@@ -29,7 +29,7 @@ public class Cromosoma implements Comparable{
             for (int i = 0; i < cromosoma.length; i+=4) {
                 tablero.cambiarSemaforos(cromosoma[i], cromosoma[i+1], cromosoma[i+2], cromosoma[i+3]);
                 for (int j = 0; j < 10; j++) {
-                    if (j==4 || j==0){
+                    if (j==5 || j==0){
                         tablero.addCoches(1);
                         cochesEntrantes = cochesEntrantes + 4;
                     }
