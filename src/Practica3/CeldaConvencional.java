@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @author Italo
  */
 public class CeldaConvencional implements Celda {
-    private boolean estadoCarretera;
+    private boolean estadoCarretera; //true=circulando, false=parado
     private int coche;
     private int nextCoche;
     private final ArrayList<Integer> coches;

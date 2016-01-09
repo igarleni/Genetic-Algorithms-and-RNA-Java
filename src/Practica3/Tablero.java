@@ -115,7 +115,7 @@ public class Tablero {
                 float aux = coches.get(celda.getCoche());
                 aux = aux/(i*2+1);
                 resultado += aux;
-                coches.add(celda.getCoche(), 0);
+                coches.set(celda.getCoche(), 0);
             }
         }
         for (int i = 1; i < horizontal2.size(); i++) {
@@ -124,7 +124,7 @@ public class Tablero {
                 float aux = coches.get(celda.getCoche());
                 aux = aux/(i*2+1);
                 resultado += aux;
-                coches.add(celda.getCoche(), 0);
+                coches.set(celda.getCoche(), 0);
             }
         }
         for (int i = 1; i < vertical1.size(); i++) {
@@ -133,7 +133,7 @@ public class Tablero {
                 float aux = coches.get(celda.getCoche());
                 aux = aux/(i*2+1);
                 resultado += aux;
-                coches.add(celda.getCoche(), 0);
+                coches.set(celda.getCoche(), 0);
             }
         }
         for (int i = 1; i < vertical2.size(); i++) {
